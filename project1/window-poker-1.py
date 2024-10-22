@@ -21,6 +21,10 @@ def deal1():
         deck.remove(card) 
     cards_label = tk.Label(window, text=", ".join(drawn_cards), font=('Georgia', 20))
     cards_label.pack(pady=20)
+    bet_enter_label = tk.Label(window, text = 'enter bet', font = ('georgia', 20))
+    bet_enter_label.pack(pady = 20)
+    bet_amount_entry = tk.Entry(window, font = ('georgia', 20))
+    bet_amount_entry.pack(pady=20)
 
 def first_bet (name):
     for widget in window.winfo_children():
