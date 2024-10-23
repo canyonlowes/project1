@@ -17,6 +17,7 @@ wallet = 100
 def clear_page(): #clears page when called. (Time saver)
     for widget in window.winfo_children():
         widget.pack_forget()
+        
 
 def test_bet(bet): #checks if your bet is allowed (<= wallet and int)
     global wallet
@@ -31,10 +32,14 @@ def test_bet(bet): #checks if your bet is allowed (<= wallet and int)
             total_betting_label = tk.Label(window, text = f'Betting ${bet_amount}. ${wallet} remaining', font = ('georgia', 10))
             total_betting_label.pack (pady = 20)
             window.after(2000, total_betting_label.destroy)
+            window.after(200)
     except: #bet was either a decimal or text
         error_label = tk.Label(window, text = 'Invalid number', font = ('georgia', 20)) #bet cannot be made an int
-        error_label.pack(pady = 10)
+        error_label.pack(pady = 20)
         window.after(2000, error_label.destroy)
+
+def fold (): #if player folds
+    print ('placeholder')
 
 def deal1(): #first deal
     for widget in window.winfo_children():
@@ -49,14 +54,17 @@ def deal1(): #first deal
     bet_amount_entry = tk.Entry(window, font = ('georgia', 20))
     bet_amount_entry.pack(pady=20)
     bet_button = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_amount_entry.get()))
-    bet_button.pack(pady=20)
+    bet_button.pack(pady=0)
+    fold_button = tk.Button(window, text = 'Fold', font = ('georgia', 15), command=lambda:fold())
+    fold_button.pack(pady=0)
 
 def pre_bet (name): #before you bet
+    username = str(name)
     for widget in window.winfo_children():
         widget.pack_forget()
-    name_label = tk.Label(window, text = f'welcome {name}', font = ('georgia', 20))
+    name_label = tk.Label(window, text = f'welcome {name}', font = ('georgia', 30))
     name_label.pack(pady=20)
-    deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 40), command=lambda:deal1())
+    deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 20), command=lambda:deal1())
     deal_button.pack(pady=20)
 
     
@@ -64,9 +72,9 @@ def pre_bet (name): #before you bet
 def welcome (): #welcome screen. (Add settings button and more stuff here)
     welcome_label = tk.Label(window, text = "Enter name below", font = ("georgia", 20))
     welcome_label.pack(pady=20)
-    name_entry = tk.Entry(window, font = ("georgia", 20))
+    name_entry = tk.Entry(window, bg='brown4', fg='black', font = ("georgia", 20))
     name_entry.pack(pady=30)
-    play_button = tk.Button(window, text = "Play!", font = ("georgia", 20), command=lambda: pre_bet(name=name_entry.get()))
+    play_button = tk.Button(window, bg="red4", fg='black', text = "Play!", font = ("georgia", 20), command=lambda: pre_bet(name=name_entry.get()))
     play_button.pack(pady=40)
 
 welcome()
