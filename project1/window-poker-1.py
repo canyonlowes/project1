@@ -22,13 +22,18 @@ def test_bet(bet): #checks if your bet is allowed (<= wallet and int)
     global wallet
     try:
         bet_amount = int(bet) #checks if bet can be made an int
-        wallet = wallet - bet_amount
-        total_betting_label = tk.Label(window, text = f'Betting ${bet_amount}. ${wallet} remaining', font = ('georgia', 20))
-        total_betting_label.pack (pady = 20)
-        window.after(2000, total_betting_label.destroy)
-    except:
+        if bet_amount > wallet: #bet more than you have
+            not_enough_label = tk.Label(window, text = f'Not enough money. Max bet ${wallet}', font=('georgia', 10))
+            not_enough_label.pack(pady=20)
+            window.after(2000, not_enough_label.destroy)
+        else: #bet less than or equal to what you have
+            wallet = wallet - bet_amount
+            total_betting_label = tk.Label(window, text = f'Betting ${bet_amount}. ${wallet} remaining', font = ('georgia', 10))
+            total_betting_label.pack (pady = 20)
+            window.after(2000, total_betting_label.destroy)
+    except: #bet was either a decimal or text
         error_label = tk.Label(window, text = 'Invalid number', font = ('georgia', 20)) #bet cannot be made an int
-        error_label.pack(pady = 20)
+        error_label.pack(pady = 10)
         window.after(2000, error_label.destroy)
 
 def deal1(): #first deal
@@ -54,7 +59,6 @@ def pre_bet (name): #before you bet
     deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 40), command=lambda:deal1())
     deal_button.pack(pady=20)
 
-    
     
 
 def welcome (): #welcome screen. (Add settings button and more stuff here)
