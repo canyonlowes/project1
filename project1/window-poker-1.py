@@ -12,7 +12,15 @@ window.geometry("500x500")
 window.title('Poker')
 
 
-wallet = 100
+wallet = int(100)
+
+def welcome (): #welcome screen. (Add settings button and more stuff here)
+    welcome_label = tk.Label(window, text = "Enter name below", font = ("georgia", 20))
+    welcome_label.pack(pady=20)
+    name_entry = tk.Entry(window, bg='brown4', fg='black', font = ("georgia", 20))
+    name_entry.pack(pady=30)
+    play_button = tk.Button(window, bg="red4", fg='black', text = "Play!", font = ("georgia", 20),command=lambda: pre_bet(name=name_entry.get()))
+    play_button.pack(pady=40)
 
 def clear_page(): #clears page when called. (Time saver)
     for widget in window.winfo_children():
@@ -38,8 +46,7 @@ def test_bet(bet): #checks if your bet is allowed (<= wallet and int)
         error_label.pack(pady = 20)
         window.after(2000, error_label.destroy)
 
-def fold (): #if player folds
-    print ('placeholder')
+
 
 def deal1(): #first deal
     for widget in window.winfo_children():
@@ -58,7 +65,24 @@ def deal1(): #first deal
     fold_button = tk.Button(window, text = 'Fold', font = ('georgia', 15), command=lambda:fold())
     fold_button.pack(pady=0)
 
-def pre_bet (name): #before you bet
+def fold (): #if player folds
+    wallet_fold_label = tk.Label(window, text = f'${wallet} remaining', font = ('georgia', 10))
+    wallet_fold_label.pack(pady=20)
+    folding_lable=tk.Label(window, text = 'Folding', font = ('georgia', 10))
+    folding_lable.pack(pady=20)
+    window.after(2,lambda:clear_page())
+    window.after(1000, lambda:round_pre_bet())
+
+'''was having trouble getting the pre_bet function to work. Could'nt get it to carry the username variable. Might try to fix, but
+this should work for now'''
+def round_pre_bet(): #Before you bet after each round after first round 
+    lambda:clear_page()
+    deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 20))
+    deal_button.pack(pady = 20)
+
+
+
+def pre_bet (name): #before you bet after welcome function. 
     username = str(name)
     for widget in window.winfo_children():
         widget.pack_forget()
@@ -69,13 +93,7 @@ def pre_bet (name): #before you bet
 
     
 
-def welcome (): #welcome screen. (Add settings button and more stuff here)
-    welcome_label = tk.Label(window, text = "Enter name below", font = ("georgia", 20))
-    welcome_label.pack(pady=20)
-    name_entry = tk.Entry(window, bg='brown4', fg='black', font = ("georgia", 20))
-    name_entry.pack(pady=30)
-    play_button = tk.Button(window, bg="red4", fg='black', text = "Play!", font = ("georgia", 20), command=lambda: pre_bet(name=name_entry.get()))
-    play_button.pack(pady=40)
+
 
 welcome()
 
