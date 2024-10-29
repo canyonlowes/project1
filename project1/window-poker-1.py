@@ -15,12 +15,15 @@ window.title('Poker')
 wallet = int(100)
 
 def welcome (): #welcome screen. (Add settings button and more stuff here)
+    clear_page()
     welcome_label = tk.Label(window, text = "Enter name below", font = ("georgia", 20))
     welcome_label.pack(pady=20)
     name_entry = tk.Entry(window, bg='brown4', fg='black', font = ("georgia", 20))
     name_entry.pack(pady=30)
     play_button = tk.Button(window, bg="red4", fg='black', text = "Play!", font = ("georgia", 20),command=lambda: pre_bet(name=name_entry.get()))
     play_button.pack(pady=40)
+    settings_button = tk.Button(window, text = 'Settings', font = ('georgia', 20), command=lambda:settings_page())
+    settings_button.pack(pady=20)
 
 def clear_page(): #clears page when called. (Time saver)
     for widget in window.winfo_children():
@@ -103,6 +106,13 @@ def pre_bet (name): #before you bet after welcome function.
     name_label.pack(pady=20)
     deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 20), command=lambda:blind())
     deal_button.pack(pady=20)
+
+def settings_page(): #settings page
+    clear_page()
+    settings_placeholder_label = tk.Label(window, text = 'Placeholder! Mj is making the real thing.\n right Mj?', font = ('georgia', 20))
+    settings_placeholder_label.pack(pady=20)
+    back_from_settings_button = tk.Button(window, text = 'Back', font = ('georgia', 20), command=lambda:welcome())
+    back_from_settings_button.pack(pady=20)
 
     
 
