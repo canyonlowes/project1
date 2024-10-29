@@ -14,8 +14,9 @@ window.title('Poker')
 
 wallet = int(100)
 
-def welcome (): #welcome screen. (Add settings button and more stuff here)
+def welcome (color): #welcome screen. (Add settings button and more stuff here)
     clear_page()
+    window.configure(bg=color)
     welcome_label = tk.Label(window, text = "Enter name below", font = ("georgia", 20))
     welcome_label.pack(pady=20)
     name_entry = tk.Entry(window, bg='brown4', fg='black', font = ("georgia", 20))
@@ -113,12 +114,15 @@ def settings_page(): #settings page
     settings_placeholder_label.pack(pady=20)
     back_from_settings_button = tk.Button(window, text = 'Back', font = ('georgia', 20), command=lambda:welcome())
     back_from_settings_button.pack(pady=20)
+    color_pick_test = tk.Entry(window, font = ('georgia', 20))
+    color_pick_test.pack(pady=20)
+    commit_button = tk.Button (window, text = 'commit', font = ('georgia', 20), command=lambda:welcome(color_pick_test.get()))
+    commit_button.pack(pady=20)
 
     
 
 
 
-welcome()
+welcome('green')
 
 window.mainloop()
-
