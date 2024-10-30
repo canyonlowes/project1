@@ -15,14 +15,14 @@ window.title('Poker')
 wallet = int(100)
 
 from PIL import Image, ImageTk  # Import from Pillow
-
+green = "POKER HOME SCREEN_1.jpg"
 
 
 
 def welcome (): #welcome screen. (Add settings button and more stuff here)
     #window.configure(bg=selected_color)
     clear_page()
-    image = Image.open("POKER HOME SCREEN_1.jpg")
+    image = Image.open(green)
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
     bg_image = ImageTk.PhotoImage(resized_image)
     window.bg_image = bg_image  #Store the image as an attribute of the window
