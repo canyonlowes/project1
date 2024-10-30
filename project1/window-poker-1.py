@@ -10,14 +10,25 @@ window = tk.Tk()
 window.geometry("500x500")
 window.title('Poker')
 
-selected_color = ('powder blue')
+#selected_color = ('powder blue')
 
 wallet = int(100)
 
+from PIL import Image, ImageTk  # Import from Pillow
+
+
+
 
 def welcome (): #welcome screen. (Add settings button and more stuff here)
-    window.configure(bg=selected_color)
+    #window.configure(bg=selected_color)
     clear_page()
+    image = Image.open("POKER HOME SCREEN_1.jpg")
+    resized_image = image.resize((1920, 1080), Image.LANCZOS)
+    bg_image = ImageTk.PhotoImage(resized_image)
+    window.bg_image = bg_image  #Store the image as an attribute of the window
+    bg_label = tk.Label(window, image=bg_image)
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
     welcome_label = tk.Label(window, text = "Enter name below", font = ("georgia", 20))
     welcome_label.pack(pady=20)
     name_entry = tk.Entry(window, bg='snow2', fg='black', font = ("georgia", 20))
@@ -144,5 +155,7 @@ def commit_color(color):
 
 
 welcome()
+
+
 
 window.mainloop()
