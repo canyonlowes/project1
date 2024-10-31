@@ -33,13 +33,30 @@ def welcome (): #welcome screen. (Add settings button and more stuff here)
     welcome_label = tk.Label(window, text = "Enter name below", font = ("georgia", 20))
     welcome_label.pack(pady=20)
     name_entry = tk.Entry(window, bg='snow2', fg='black', font = ("georgia", 20))
-    name_entry.pack(pady=30)
-    play_button = tk.Button(window, bg="snow2", fg='black', text = "Play!", font = ("georgia", 20),command=lambda: pre_bet(name=name_entry.get()))
-    play_button.pack(pady=40)
+    name_entry.pack(pady=20)
+    play_button = tk.Button(window, bg="snow2", fg='black', text = "Play!", font = ("georgia", 20),command=lambda: test_name(name=name_entry.get()))
+    play_button.pack(pady=20)
     settings_button = tk.Button(window, text = 'Settings', font = ('georgia', 20), command=lambda:settings_page())
     settings_button.pack(pady=20)
     wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
-    wallet_label.pack(pady=20)
+    wallet_label.pack(pady=0)
+
+    def test_name(name):
+        if len(name) == 0:
+            bad_username_label = tk.Label(window, text = 'Please enter a username between 1 and 10 character(s)', font = ('georgia', 10))
+            bad_username_label.pack(pady = 15)
+            window.after(2000,bad_username_label.destroy)
+        elif len(name) > 10:
+            bad_username_label = tk.Label(window, text = 'Please enter a username between 1 and 10 character(s)', font = ('georgia', 10))
+            bad_username_label.pack(pady = 15)
+            window.after(2000,bad_username_label.destroy)
+        elif name.count(' ') > 0:
+            no_space_username_label = tk.Label(window, text = 'Username must not contain spaces', font = ('georgia', 10))
+            no_space_username_label.pack(pady=15)
+            window.after(2000,no_space_username_label.destroy)
+        
+        else:
+            window.after(1,lambda:pre_bet(name=name_entry.get()))
 
 def clear_page(): #clears page when called. (Time saver)
     for widget in window.winfo_children():
@@ -49,6 +66,7 @@ def clear_page(): #clears page when called. (Time saver)
 
 def blind(): #first deal
     global current_color
+    global wallet
     def test_bet(bet,next): #checks if your bet is allowed (<= wallet and int)
         global wallet
         try:
@@ -84,6 +102,8 @@ def blind(): #first deal
         bet_button_flop.pack(pady=0)
         fold_button_flop = tk.Button(window, text = 'Fold', font = ('georgia', 15), command=lambda:fold())
         fold_button_flop.pack(pady=0)
+        wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
+        wallet_label.pack(pady=0)
     
     def turn():
         clear_page()
@@ -106,6 +126,8 @@ def blind(): #first deal
     bet_button.pack(pady=0)
     fold_button = tk.Button(window, text = 'Fold', font = ('georgia', 15), command=lambda:fold())
     fold_button.pack(pady=0)
+    wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
+    wallet_label.pack(pady=0)
 
 
 
@@ -142,6 +164,8 @@ def pre_bet (name): #before you bet after welcome function.
     name_label.pack(pady=20)
     deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 20), command=lambda:blind())
     deal_button.pack(pady=20)
+    back_button = tk.Button(window, text = 'Back', font = ('georgia', 10),command=lambda:welcome())
+    back_button.pack(pady = 20)
 
 def settings_page(): #settings page
     clear_page()
