@@ -10,22 +10,23 @@ window = tk.Tk()
 window.geometry("500x500")
 window.title('Poker')
 
-#selected_color = ('powder blue')
 
 wallet = int(100)
 
-from PIL import Image, ImageTk  # Import from Pillow
+from PIL import Image, ImageTk
 green = "POKER HOME SCREEN_1.jpg"
+gold = "gold1.jpg"
+
 
 
 
 def welcome (): #welcome screen. (Add settings button and more stuff here)
     #window.configure(bg=selected_color)
     clear_page()
-    image = Image.open(green)
+    image = Image.open(gold)
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
     bg_image = ImageTk.PhotoImage(resized_image)
-    window.bg_image = bg_image  #Store the image as an attribute of the window
+    window.bg_image = bg_image  #Store the image as a part of the window
     bg_label = tk.Label(window, image=bg_image)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
@@ -119,7 +120,7 @@ def fold (): #if player folds
     window.after(2,lambda:clear_page())
     window.after(1000, lambda:welcome())
 
-'''was having trouble getting the pre_bet function to work. Could'nt get it to carry the username variable. Might try to fix, but
+'''was having trouble getting the pre_bet function to work. Couldn't get it to carry the username variable. Might try to fix, but
 this should work for now'''
 def round_pre_bet(): #Before you bet after each round after first round 
     lambda:clear_page()
@@ -127,7 +128,13 @@ def round_pre_bet(): #Before you bet after each round after first round
     deal_button.pack(pady = 20)
 
 
-def pre_bet (name): #before you bet after welcome function. 
+def pre_bet (name): #before you bet after welcome function.
+    image = Image.open(green) 
+    resized_image = image.resize((1920, 1080), Image.LANCZOS)
+    bg_image = ImageTk.PhotoImage(resized_image)
+    window.bg_image = bg_image  #Store the image as a part of the window
+    bg_label = tk.Label(window, image=bg_image)
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
     username = str(name)
     print (username) #testing
     clear_page()
