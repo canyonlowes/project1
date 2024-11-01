@@ -40,6 +40,7 @@ def welcome (): #welcome screen. (Add settings button and more stuff here)
     settings_button.pack(pady=20)
     wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
+    window.bind('<Return>', lambda event: test_name(name=name_entry.get()))
 
     def test_name(name):
         if len(name) == 0:
@@ -57,6 +58,7 @@ def welcome (): #welcome screen. (Add settings button and more stuff here)
         
         else:
             window.after(1,lambda:pre_bet(name=name_entry.get()))
+    window.bind('<Escape>', lambda event:window.destroy())
 
 def clear_page(): #clears page when called. (Time saver)
     for widget in window.winfo_children():
@@ -91,6 +93,7 @@ def blind(): #first deal
         bet_amount_entry.destroy()
         bet_button.destroy()
         fold_button.destroy()
+        wallet_label.destroy()
         drawn_cards_2 = random.sample(deck, 1)
         for card in drawn_cards_2:
             deck.remove(card)
@@ -102,13 +105,16 @@ def blind(): #first deal
         bet_button_flop.pack(pady=0)
         fold_button_flop = tk.Button(window, text = 'Fold', font = ('georgia', 15), command=lambda:fold())
         fold_button_flop.pack(pady=0)
-        wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
-        wallet_label.pack(pady=0)
+        wallet_label_2 = tk.Label(window, text = f'Wallet: ${wallet}')
+        wallet_label_2.pack(pady=0)
+        window.bind('<Escape>',lambda event:fold())
+        window.bind('<Return>', lambda event:test_bet(bet_entry_flop.get(),next = turn))
     
     def turn():
         clear_page()
         print ('placeholder')
         print (wallet)
+
 
 
     
@@ -128,8 +134,8 @@ def blind(): #first deal
     fold_button.pack(pady=0)
     wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
-
-
+    window.bind('<Escape>',lambda event:fold())
+    window.bind('<Return>', lambda event:test_bet(bet_amount_entry.get(),next = flop))
 
 
 
@@ -140,14 +146,15 @@ def fold (): #if player folds
     folding_lable=tk.Label(window, text = 'Folding', font = ('georgia', 10))
     folding_lable.pack(pady=20)
     window.after(2,lambda:clear_page())
-    window.after(1000, lambda:welcome())
+    window.after(1000, lambda:round_pre_bet())
 
 '''was having trouble getting the pre_bet function to work. Couldn't get it to carry the username variable. Might try to fix, but
 this should work for now'''
 def round_pre_bet(): #Before you bet after each round after first round 
     lambda:clear_page()
-    deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 20))
+    deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 20),command=lambda:blind())
     deal_button.pack(pady = 20)
+    window.bind('<Return>', lambda event:blind())
 
 
 def pre_bet (name): #before you bet after welcome function.
@@ -157,7 +164,7 @@ def pre_bet (name): #before you bet after welcome function.
     window.bg_image = bg_image  #Store the image as a part of the window
     bg_label = tk.Label(window, image=bg_image)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-    username = str(name)
+    username = str(name)#testing
     print (username) #testing
     clear_page()
     name_label = tk.Label(window, text = f'welcome {username}', font = ('georgia', 30))
@@ -166,6 +173,8 @@ def pre_bet (name): #before you bet after welcome function.
     deal_button.pack(pady=20)
     back_button = tk.Button(window, text = 'Back', font = ('georgia', 10),command=lambda:welcome())
     back_button.pack(pady = 20)
+    window.bind('<Escape>',lambda event:welcome())
+    window.bind('<Return>',lambda event:blind())
 
 def settings_page(): #settings page
     clear_page()
@@ -186,7 +195,5 @@ def commit_color(color):
 
 
 welcome()
-
-
 
 window.mainloop()
