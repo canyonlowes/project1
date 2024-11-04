@@ -110,10 +110,23 @@ def blind(): #first deal
         window.bind('<Escape>',lambda event:fold())
         window.bind('<Return>', lambda event:test_bet(bet_entry_flop.get(),next = turn))
     
-    def turn():
-        clear_page()
-        print ('placeholder')
-        print (wallet)
+        def turn():
+            bet_entry_flop.destroy()
+            bet_button_flop.destroy()
+            fold_button_flop.destroy()
+            wallet_label_2.destroy()
+            drawn_cards_3 = random.sample(deck, 1)
+            for card in drawn_cards_3:
+                deck.remove(card)
+            cards_label_3 = tk.Label(window, text=", ".join(drawn_cards_3), font=('Georgia', 20))
+            cards_label_3.pack(pady=0)
+
+            
+
+            def final():
+                print('final placeholder :)')
+
+
 
 
 
@@ -154,6 +167,9 @@ def round_pre_bet(): #Before you bet after each round after first round
     lambda:clear_page()
     deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 20),command=lambda:blind())
     deal_button.pack(pady = 20)
+    home_button = tk.Button(window, text = 'Main Menu', font = ('georgia', 10),command=lambda:welcome())
+    home_button.pack(pady = 20)
+    window.bind('<Escape>',lambda event:welcome())
     window.bind('<Return>', lambda event:blind())
 
 
