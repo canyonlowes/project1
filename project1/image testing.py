@@ -3,7 +3,7 @@ import tkinter as tk
 from PIL import Image, ImageTk  # Import from Pillow
 
 # Create the deck of cards
-card_types = (['Ace ', '1 ', '2 ', '3 ', '4 ', '5 ', '6 ', '7 ', '8 ', '9 ', '10 ', 'Jack ', 'Queen ', 'King '])
+card_types = (['Ace ', '2 ', '3 ', '4 ', '5 ', '6 ', '7 ', '8 ', '9 ', '10 ', 'Jack ', 'Queen ', 'King '])
 suites = (['hearts', 'diamonds', 'spades', 'clubs'])
 deck = [f'{rank} of {suit}' for rank in card_types for suit in suites]
 
@@ -34,6 +34,119 @@ def resize_image(event):
     # Update the background image in the label
     if bg_label:
         bg_label.config(image=bg_image)
+    
+    if card_types == 'Ace' and suites == 'hearts':
+        image = Image.open('ace_of_hearts.png')
+    if card_types == 'Ace' and suites == 'spades':
+        image = Image.open('ace_of_spades2.png')
+    if card_types == 'Ace' and suites == 'diamonds':
+        image = Image.open('ace_of_diamonds.png')
+    if card_types == 'Ace' and suites == 'clubs':
+        image = Image.open('ace_of_clubs.png')
+
+    if card_types == 'Jack' and suites == 'hearts':
+        image = Image.open('jack_of_hearts2.png')
+    if card_types == 'Jack' and suites == 'spades':
+        image = Image.open('jack_of_spades2.png')
+    if card_types == 'Jack' and suites == 'diamonds':
+        image = Image.open('jack_of_diamonds2.png')
+    if card_types == 'Jack' and suites == 'clubs':
+        image = Image.open('jack_of_clubs2.png')
+    
+    if card_types == 'King' and suites == 'hearts':
+        image = Image.open('king_of_hearts2.png')
+    if card_types == 'King' and suites == 'spades':
+        image = Image.open('king_of_spades2.png')
+    if card_types == 'King' and suites == 'diamonds':
+        image = Image.open('king_of_diamonds2.png')
+    if card_types == 'King' and suites == 'clubs':
+        image = Image.open('king_of_clubs2.png')
+
+    if card_types == '2' and suites == 'hearts':
+        image = Image.open('2_of_hearts.png')
+    if card_types == '2' and suites == 'spades':
+        image = Image.open('2_of_spades.png')
+    if card_types == '2' and suites == 'diamonds':
+        image = Image.open('2_of_diamonds.png')
+    if card_types == '2' and suites == 'clubs':
+        image = Image.open('2_of_clubs.png')
+    
+    if card_types == '3' and suites == 'hearts':
+        image = Image.open('3_of_hearts.png')
+    if card_types == '3' and suites == 'spades':
+        image = Image.open('3_of_spades.png')
+    if card_types == '3' and suites == 'diamonds':
+        image = Image.open('3_of_diamonds.png')
+    if card_types == '3' and suites == 'clubs':
+        image = Image.open('3_of_clubs.png')
+
+    if card_types == '4' and suites == 'hearts':
+        image = Image.open('4_of_hearts.png')
+    if card_types == '4' and suites == 'spades':
+        image = Image.open('4_of_spades.png')
+    if card_types == '4' and suites == 'diamonds':
+        image = Image.open('4_of_diamonds.png')
+    if card_types == '4' and suites == 'clubs':
+        image = Image.open('4_of_clubs.png')
+
+    if card_types == '5' and suites == 'hearts':
+        image = Image.open('5_of_hearts.png')
+    if card_types == '5' and suites == 'spades':
+        image = Image.open('5_of_spades.png')
+    if card_types == '5' and suites == 'diamonds':
+        image = Image.open('5_of_diamonds.png')
+    if card_types == '5' and suites == 'clubs':
+        image = Image.open('5_of_clubs.png')
+    
+    if card_types == '6' and suites == 'hearts':
+        image = Image.open('6_of_hearts.png')
+    if card_types == '6' and suites == 'spades':
+        image = Image.open('6_of_spades.png')
+    if card_types == '6' and suites == 'diamonds':
+        image = Image.open('6_of_diamonds.png')
+    if card_types == '6' and suites == 'clubs':
+        image = Image.open('6_of_clubs.png')
+
+    if card_types == '7' and suites == 'hearts':
+        image = Image.open('7_of_hearts.png')
+    if card_types == '7' and suites == 'spades':
+        image = Image.open('7_of_spades.png')
+    if card_types == '7' and suites == 'diamonds':
+        image = Image.open('7_of_diamonds.png')
+    if card_types == '7' and suites == 'clubs':
+        image = Image.open('7_of_clubs.png')
+
+    if card_types == '8' and suites == 'hearts':
+        image = Image.open('8_of_hearts.png')
+    if card_types == '8' and suites == 'spades':
+        image = Image.open('8_of_spades.png')
+    if card_types == '8' and suites == 'diamonds':
+        image = Image.open('8_of_diamonds.png')
+    if card_types == '8' and suites == 'clubs':
+        image = Image.open('8_of_clubs.png')
+
+    if card_types == '9' and suites == 'hearts':
+        image = Image.open('9_of_hearts.png')
+    if card_types == '9' and suites == 'spades':
+        image = Image.open('9_of_spades.png')
+    if card_types == '9' and suites == 'diamonds':
+        image = Image.open('9_of_diamonds.png')
+    if card_types == '9' and suites == 'clubs':
+        image = Image.open('9_of_clubs.png')
+
+    if card_types == '10' and suites == 'hearts':
+        image = Image.open('10_of_hearts.png')
+    if card_types == '10' and suites == 'spades':
+        image = Image.open('10_of_spades.png')
+    if card_types == '10' and suites == 'diamonds':
+        image = Image.open('10_of_diamonds.png')
+    if card_types == '10' and suites == 'clubs':
+        image = Image.open('10_of_clubs.png')
+
+    
+
+    
+
 
 def welcome():  # Welcome screen
     clear_page()
