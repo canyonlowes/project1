@@ -80,9 +80,9 @@ def blind(): #first deal
             else: #bet less than or equal to what you have
                 wallet = wallet - bet_amount
                 total_betting_label = tk.Label(window, text = f'Betting ${bet_amount}. ${wallet} remaining', font = ('georgia', 10))
-                total_betting_label.pack (pady = 20)
+                total_betting_label.pack(pady = 20)
                 window.after(1000, total_betting_label.destroy)
-                window.after(1000, lambda:next())
+                window.after(1000, lambda: next())
         except: #bet was either a decimal or text
             error_label = tk.Label(window, text = 'Invalid number', font = ('georgia', 20)) #bet cannot be made an int
             error_label.pack(pady = 20)
