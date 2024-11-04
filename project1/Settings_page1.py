@@ -1,5 +1,6 @@
 #mj make the settings page here boi
 import tkinter as tk
 window = tk.Tk()
-window.configure(bg='green')
-window.geometry("500x500")
+from PIL import Image, ImageTk
+green = "POKER HOME SCREEN_1.jpg"
+gold = "gold1.jpg"

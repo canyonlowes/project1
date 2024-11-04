@@ -72,7 +72,7 @@ def blind(): #first deal
     def test_bet(bet,next): #checks if your bet is allowed (<= wallet and int)
         global wallet
         try:
-            bet_amount = int(bet) #checks if bet can be made an int
+            bet_amount = int(bet,) #checks if bet can be made an int
             if bet_amount > wallet: #bet more than you have
                 not_enough_label = tk.Label(window, text = f'Not enough money. Max bet ${wallet}', font=('georgia', 10))
                 not_enough_label.pack(pady=20)
@@ -120,8 +120,9 @@ def blind(): #first deal
                 deck.remove(card)
             cards_label_3 = tk.Label(window, text=", ".join(drawn_cards_3), font=('Georgia', 20))
             cards_label_3.pack(pady=0)
-
-            
+            bet_entry_turn = tk.Entry(window, font = ('georgia', 20))
+            bet_entry_turn.pack(pady=20)
+            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command= lambda:test_bet(bet_entry_turn.get()))
 
             def final():
                 print('final placeholder :)')
