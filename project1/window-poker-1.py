@@ -130,20 +130,19 @@ if card_types == '10' and suites == 'clubs':
 
 
 def welcome (): #welcome screen. (Add settings button and more stuff here)
-    #window.configure(bg=selected_color)
     clear_page()
     image = Image.open(gold)
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
     bg_image = ImageTk.PhotoImage(resized_image)
-    window.bg_image = bg_image  #Store the image as a part of the window
+    window.bg_image = bg_image 
     bg_label = tk.Label(window, image=bg_image)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
     welcome_label = tk.Label(window, text = "Enter name below", font = ("georgia", 20))
     welcome_label.pack(pady=20)
-    name_entry = tk.Entry(window, bg='snow2', fg='black', font = ("georgia", 20))
+    name_entry = tk.Entry(window, font = ("georgia", 20))
     name_entry.pack(pady=20)
-    play_button = tk.Button(window, bg="snow2", fg='black', text = "Play!", font = ("georgia", 20),command=lambda: test_name(name=name_entry.get()))
+    play_button = tk.Button(window, text = "Play!", font = ("georgia", 20),command=lambda: test_name(name=name_entry.get()))
     play_button.pack(pady=20)
     settings_button = tk.Button(window, text = 'Settings', font = ('georgia', 20), command=lambda:settings_page())
     settings_button.pack(pady=20)
@@ -151,7 +150,7 @@ def welcome (): #welcome screen. (Add settings button and more stuff here)
     wallet_label.pack(pady=0)
     window.bind('<Return>', lambda event: test_name(name=name_entry.get()))
 
-    def test_name(name):
+    def test_name(name): #checks if name is valid (name must be betweein 1 and 10 letters and no spaces)
         if len(name) == 0:
             bad_username_label = tk.Label(window, text = 'Please enter a username between 1 and 10 character(s)', font = ('georgia', 10))
             bad_username_label.pack(pady = 15)
