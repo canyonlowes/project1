@@ -9,6 +9,8 @@ import tkinter as tk
 window = tk.Tk()
 window.geometry("500x500")#change to make full screen before relese (or do something with settings)
 window.title('Poker')
+gold_icon = 'gold_icon1.ico'
+window.iconbitmap(gold_icon)
 
 
 wallet = int(100)
@@ -258,9 +260,6 @@ def blind(): #first deal
 
 
 
-
-
-    
     clear_page()
     drawn_cards = random.sample(deck, 3)
     for card in drawn_cards:
