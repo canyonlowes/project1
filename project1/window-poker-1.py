@@ -15,7 +15,20 @@ wallet = int(100)
 
 from PIL import Image, ImageTk
 green = "POKER HOME SCREEN_1.jpg"
-gold = "gold1.jpg"
+gold = "gold1.jpg" #this is the default home screen. Only replaced by certain themes like cats
+cat_home = "cat1.jpg"
+cat_game_background = "cat2.jpg"
+christmas_home = "christmasbg4.jpg"
+christmas_game_background = "christmasbg1.jpg"
+purple = "purple.jpg"
+black = "black1.jpg"
+old_fashioned_game = "guns1.jpg"
+old_fashioned_home = "brown1.jpg"
+red = "red1.jpg"
+pink = "pink2.jpg"
+
+selected_theme = gold
+home_background = gold
 
 
 if card_types == 'Ace' and suites == 'hearts':
@@ -131,7 +144,7 @@ if card_types == '10' and suites == 'clubs':
 
 def welcome (): #welcome screen. (Add settings button and more stuff here)
     clear_page()
-    image = Image.open(gold)
+    image = Image.open(home_background)
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
     bg_image = ImageTk.PhotoImage(resized_image)
     window.bg_image = bg_image 
@@ -144,7 +157,7 @@ def welcome (): #welcome screen. (Add settings button and more stuff here)
     name_entry.pack(pady=20)
     play_button = tk.Button(window, text = "Play!", font = ("georgia", 20),command=lambda: test_name(name=name_entry.get()))
     play_button.pack(pady=20)
-    settings_button = tk.Button(window, text = 'Settings', font = ('georgia', 20), command=lambda:settings_page())
+    settings_button = tk.Button(window, text = 'Settings', font = ('georgia', 20), command=lambda:settings())
     settings_button.pack(pady=20)
     wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
@@ -175,7 +188,6 @@ def clear_page(): #clears page when called. (Time saver)
 
 
 def blind(): #first deal
-    global current_color
     global wallet
     def test_bet(bet,next): #checks if your bet is allowed (<= wallet and int)
         global wallet
@@ -262,7 +274,6 @@ def blind(): #first deal
 
 
 def fold (): #if player folds
-    global current_color
     wallet_fold_label = tk.Label(window, text = f'${wallet} remaining', font = ('georgia', 10))
     wallet_fold_label.pack(pady=20)
     folding_lable=tk.Label(window, text = 'Folding', font = ('georgia', 10))
@@ -283,7 +294,7 @@ def round_pre_bet(): #Before you bet after each round after first round
 
 
 def pre_bet (name): #before you bet after welcome function.
-    image = Image.open(green) 
+    image = Image.open(selected_theme) 
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
     bg_image = ImageTk.PhotoImage(resized_image)
     window.bg_image = bg_image  #Store the image as a part of the window
@@ -301,22 +312,86 @@ def pre_bet (name): #before you bet after welcome function.
     window.bind('<Escape>',lambda event:welcome())
     window.bind('<Return>',lambda event:blind())
 
-def settings_page(): #settings page
+def settings():
     clear_page()
-    settings_placeholder_label = tk.Label(window, text = 'Placeholder! Mj is making the real thing.\n right Mj?', font = ('georgia', 20))
-    settings_placeholder_label.pack(pady=20)
-    back_from_settings_button = tk.Button(window, text = 'Back', font = ('georgia', 20), command=lambda:welcome())
-    back_from_settings_button.pack(pady=20)
-    color_pick_test = tk.Entry(window, font = ('georgia', 20))
-    color_pick_test.pack(pady=20)
-    commit_button = tk.Button (window, text = 'commit', font = ('georgia', 20), command=lambda:commit_color(color_pick_test.get()))
-    commit_button.pack(pady=20)
+    image = Image.open(selected_theme)
+    resized_image = image.resize((1920, 1080), Image.LANCZOS)
+    bg_image = ImageTk.PhotoImage(resized_image)
+    window.bg_image = bg_image
+    bg_label = tk.Label(window, image=bg_image)
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+    
+    settings_label = tk.Label(window, text='Settings', font=('Georgia', 20))
+    settings_label.pack(pady=20)
+    
+    background_button = tk.Button(window, text='Change Background', font=('Georgia', 20), command=background_menu)
+    background_button.pack(pady=20)
 
-def commit_color(color):
-    global selected_color
-    selected_color = color
-    print (f'running, {selected_color}') #testing purposes
-    welcome()
+def background_menu():
+    clear_page()
+    new_background_label = tk.Label(window, text='Choose Background', font=('Georgia', 20))
+    new_background_label.pack(pady=20)
+    color_button = tk.Button(window, text = 'Colors', font = ('georgia', 20),command=lambda:colors())
+    color_button.pack(pady = 20)
+    other_button = tk.Button(window, text = 'Other', font = ('georgia', 20),command=lambda:other_bg())
+    other_button.pack(pady = 20)
+    
+    def colors():
+        clear_page()  
+
+        green_button = tk.Button(window, text='Green', font=('Georgia', 20), command=lambda: commit_theme(green))
+        green_button.pack(pady=0)
+    
+        gold_button = tk.Button(window, text=' Gold ', font=('Georgia', 20), command=lambda: commit_theme(gold))
+        gold_button.pack(pady=0)
+
+        purple_button = tk.Button(window, text='Purple', font=('Georgia', 20), command=lambda: commit_theme(purple))
+        purple_button.pack(pady=0)
+
+        black_button = tk.Button(window, text = 'Black', font = ('georgia', 20), command=lambda:commit_theme(black))
+        black_button.pack(pady=0)
+
+        red_button = tk.Button(window, text = 'Red', font = ('georgia', 20), command=lambda:commit_theme(red))
+        red_button.pack(pady=0)
+
+        pink_button = tk.Button(window, text = 'Pink', font = ('georgia', 20), command=lambda:commit_theme(pink))
+        pink_button.pack(pady=0)
+
+        back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:background_menu())
+        back_button.pack(pady = 50)
+    
+    def other_bg ():
+        clear_page()
+
+        cat_button = tk.Button(window, text = ' Cats  ', font = ('georgia', 20),command=lambda:commit_theme(cat_game_background))
+        cat_button.pack(pady = 0)
+
+        christmas_button = tk.Button(window, text = 'Christmas', font = ('georgia', 20),command=lambda:commit_theme(christmas_game_background))
+        christmas_button.pack(pady = 0)
+
+        old_fashioned_button = tk.Button(window, text = 'Old Fashioned', font = ('georgia', 20),command=lambda:commit_theme(old_fashioned_game))
+        old_fashioned_button.pack(pady = 0)
+
+
+        back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:background_menu())
+        back_button.pack(pady = 50)
+
+def commit_theme(theme):
+    global selected_theme
+    global home_background
+    selected_theme = theme 
+    if selected_theme == cat_game_background:
+        home_background=cat_home
+        welcome()
+    elif selected_theme == christmas_game_background:
+        home_background=christmas_home
+        welcome()
+    elif selected_theme == old_fashioned_game:
+        home_background=old_fashioned_home
+        welcome()
+    else:
+        home_background=gold
+        welcome()
 
 
 welcome()
