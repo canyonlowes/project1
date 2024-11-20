@@ -1,8 +1,15 @@
 import random
+from PIL import Image, ImageTk
+import tkinter as tk
 
-card_types = (['Ace','2','3','4','5','6','7','8','9','10','Jack','Queen','King'])
-suits = (['hearts','diamonds','spades','clubs'])
-deck = [f'{rank}of {suit}' for rank in card_types for suit in suits]
+window = tk.Tk()
+window.geometry("500x500")#change to make full screen before relese (or do something with settings)
+window.title('Poker')
+
+card_types = ['Ace','2','3','4','5','6','7','8','9','10','Jack','Queen','King']
+suits = ['hearts','diamonds','spades','clubs']
+deck = [f'{rank} of {suit}' for rank in card_types for suit in suits]
+
 #dictionary to map card names to image files
 card_images = {}
 
@@ -11,14 +18,11 @@ for rank in card_types:
     for suit in suits:
         card_images[f'{rank} of {suit}'] = f'{rank.lower()}_of_{suit}.png'
 
-import tkinter as tk
-window = tk.Tk()
-window.geometry("500x500")#change to make full screen before relese (or do something with settings)
-window.title('Poker')
-
 wallet = int(100)
 
-from PIL import Image, ImageTk
+username=''#this will allow us to remember username, idk why i didnt think of this sooner
+
+
 green = "POKER HOME SCREEN_1.jpg"
 gold = "gold1.jpg" #this is the default home screen. Only replaced by certain themes like cats
 cat_home = "cat1.jpg"
@@ -131,11 +135,10 @@ def blind(): #first deal
         bet_entry_flop.pack(pady=20)
         bet_button_flop = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_flop.get(),next = turn))
         bet_button_flop.pack(pady=0)
-        fold_button_flop = tk.Button(window, text = 'Fold', font = ('georgia', 15), command=lambda:fold())
+        fold_button_flop = tk.Button(window, text = 'Fold', font = ('georgia', 15))
         fold_button_flop.pack(pady=0)
         wallet_label_2 = tk.Label(window, text = f'Wallet: ${wallet}')
         wallet_label_2.pack(pady=0)
-        window.bind('<Escape>',lambda event:fold())
         window.bind('<Return>', lambda event:test_bet(bet_entry_flop.get(),next = turn))
     
         def turn():
@@ -156,8 +159,7 @@ def blind(): #first deal
             def final():
                 print('final placeholder :)')
 
-
-
+    
     clear_page() 
     
     drawn_cards = random.sample(deck, 3)
@@ -174,7 +176,7 @@ def blind(): #first deal
             # Create a label to display the image
             image_label = tk.Label(window, image=photo)
             image_label.image = photo  # Keep a reference to the image
-            image_label.pack()
+            image_label.pack(pady=10)
 
     bet_enter_label = tk.Label(window, text = 'enter bet', font = ('georgia', 20))
     bet_enter_label.pack(pady = 20)
@@ -182,11 +184,10 @@ def blind(): #first deal
     bet_amount_entry.pack(pady=20)
     bet_button = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_amount_entry.get(),next = flop))
     bet_button.pack(pady=0)
-    fold_button = tk.Button(window, text = 'Fold', font = ('georgia', 15), command=lambda:fold())
+    fold_button = tk.Button(window, text = 'Fold', font = ('georgia', 15))
     fold_button.pack(pady=0)
     wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
-    window.bind('<Escape>',lambda event:fold())
     window.bind('<Return>', lambda event:test_bet(bet_amount_entry.get(),next = flop))
 
 
@@ -215,7 +216,7 @@ def pre_bet (name): #before you bet after welcome function.
     image = Image.open(selected_theme) 
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
     bg_image = ImageTk.PhotoImage(resized_image)
-    window.bg_image = bg_image  #Store the image as a part of the window
+    window.bg_image = bg_image  #Stores the image as a part of the window
     bg_label = tk.Label(window, image=bg_image)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
     username = str(name)#We dont necessarily need this, but if I remove it I have to redo a bunch of other stuff, so lets just keep it :) -Canyon
