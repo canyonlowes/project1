@@ -126,11 +126,22 @@ def blind(): #first deal
         bet_button.destroy()
         fold_button.destroy()
         wallet_label.destroy()
-        drawn_cards_2 = random.sample(deck, 1)
-        for card in drawn_cards_2:
+        drawn_cards2 = random.sample(deck, 1u)
+
+        for card in drawn_cards2:
             deck.remove(card)
-        cards_label_2 = tk.Label(window, text=", ".join(drawn_cards_2), font=('Georgia', 20))
-        cards_label_2.pack(pady=0)
+            image_file = card_images.get(card, None)
+            
+            if image_file:
+                image = Image.open(image_file)
+                image = image.resize((60, 85))
+                photo = ImageTk.PhotoImage(image)
+                
+            # Create a label to display the image
+            image_label = tk.Label(window, image=photo)
+            image_label.image = photo  # Keep a reference to the image
+            image_label.pack(pady=10)
+
         bet_entry_flop = tk.Entry(window, font = ('georgia', 20))
         bet_entry_flop.pack(pady=20)
         bet_button_flop = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_flop.get(),next = turn))
