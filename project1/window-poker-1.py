@@ -46,6 +46,7 @@ home_background = gold
 
 
 def welcome (): #welcome screen. (Add settings button and more stuff here)
+    global username
     clear_page()
     image = Image.open(home_background)
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
@@ -119,6 +120,7 @@ def blind(): #first deal
             error_label = tk.Label(window, text = 'Invalid number', font = ('georgia', 20)) #bet cannot be made an int
             error_label.pack(pady = 20)
             window.after(2000, error_label.destroy)
+    
 
     def flop():
         bet_enter_label.destroy()
@@ -126,7 +128,7 @@ def blind(): #first deal
         bet_button.destroy()
         fold_button.destroy()
         wallet_label.destroy()
-        drawn_cards2 = random.sample(deck, 1u)
+        drawn_cards2 = random.sample(deck, 1)
 
         for card in drawn_cards2:
             deck.remove(card)
@@ -135,11 +137,10 @@ def blind(): #first deal
             if image_file:
                 image = Image.open(image_file)
                 image = image.resize((60, 85))
-                photo = ImageTk.PhotoImage(image)
+                card_photo = ImageTk.PhotoImage(image)
                 
-            # Create a label to display the image
-            image_label = tk.Label(window, image=photo)
-            image_label.image = photo  # Keep a reference to the image
+            image_label = tk.Label(window, image=card_photo)
+            image_label.image = card_photo  #reference to the image
             image_label.pack(pady=10)
 
         bet_entry_flop = tk.Entry(window, font = ('georgia', 20))
@@ -157,18 +158,29 @@ def blind(): #first deal
             bet_button_flop.destroy()
             fold_button_flop.destroy()
             wallet_label_2.destroy()
-            drawn_cards_3 = random.sample(deck, 1)
-            for card in drawn_cards_3:
+            drawn_cards3 = random.sample(deck, 1)
+
+            for card in drawn_cards3:
                 deck.remove(card)
-            cards_label_3 = tk.Label(window, text=", ".join(drawn_cards_3), font=('Georgia', 20))
-            cards_label_3.pack(pady=0)
+                image_file = card_images.get(card, None)
+            
+                if image_file:
+                    image = Image.open(image_file)
+                    image = image.resize((60, 85))
+                    card_photo = ImageTk.PhotoImage(image)
+                    
+                image_label = tk.Label(window, image=card_photo)
+                image_label.image = card_photo  #reference to the image
+                image_label.pack(pady=10)
+
             bet_entry_turn = tk.Entry(window, font = ('georgia', 20))
             bet_entry_turn.pack(pady=20)
-            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command= lambda:test_bet(bet_entry_turn.get()))
+            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command= lambda:test_bet(bet_entry_turn.get(),next = final))
             bet_button_turn.pack(pady=20)
 
             def final():
-                print('final placeholder :)')
+                
+                bet_entry_turn.destroyb
 
     
     clear_page() 
@@ -182,11 +194,10 @@ def blind(): #first deal
         if image_file:
             image = Image.open(image_file)
             image = image.resize((60, 85))
-            photo = ImageTk.PhotoImage(image)
+            card_photo = ImageTk.PhotoImage(image)
             
-            # Create a label to display the image
-            image_label = tk.Label(window, image=photo)
-            image_label.image = photo  # Keep a reference to the image
+            image_label = tk.Label(window, image=card_photo)
+            image_label.image = card_photo  #reference to the image
             image_label.pack(pady=10)
 
     bet_enter_label = tk.Label(window, text = 'enter bet', font = ('georgia', 20))
@@ -195,13 +206,11 @@ def blind(): #first deal
     bet_amount_entry.pack(pady=20)
     bet_button = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_amount_entry.get(),next = flop))
     bet_button.pack(pady=0)
-    fold_button = tk.Button(window, text = 'Fold', font = ('georgia', 15))
+    fold_button = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
     fold_button.pack(pady=0)
     wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
     window.bind('<Return>', lambda event:test_bet(bet_amount_entry.get(),next = flop))
-
-
 
 def fold (): #if player folds
     wallet_fold_label = tk.Label(window, text = f'${wallet} remaining', font = ('georgia', 10))
@@ -209,28 +218,21 @@ def fold (): #if player folds
     folding_lable=tk.Label(window, text = 'Folding', font = ('georgia', 10))
     folding_lable.pack(pady=20)
     window.after(2,lambda:clear_page())
-    window.after(1000, lambda:round_pre_bet())
+    window.after(1000, lambda:pre_bet(username))
 
-'''was having trouble getting the pre_bet function to work. Couldn't get it to carry the username variable. Might try to fix, but
-this should work for now'''
-def round_pre_bet(): #Before you bet after each round after first round 
-    lambda:clear_page()
-    deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 20),command=lambda:blind())
-    deal_button.pack(pady = 20)
-    home_button = tk.Button(window, text = 'Main Menu', font = ('georgia', 10),command=lambda:welcome())
-    home_button.pack(pady = 20)
-    window.bind('<Escape>',lambda event:welcome())
-    window.bind('<Return>', lambda event:blind())
 
 
 def pre_bet (name): #before you bet after welcome function.
+    global username
+    if name != username:
+        username = name
     image = Image.open(selected_theme) 
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
     bg_image = ImageTk.PhotoImage(resized_image)
     window.bg_image = bg_image  #Stores the image as a part of the window
     bg_label = tk.Label(window, image=bg_image)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-    username = str(name)#We dont necessarily need this, but if I remove it I have to redo a bunch of other stuff, so lets just keep it :) -Canyon
+    #username = str(name)#We dont necessarily need this, but if I remove it I have to redo a bunch of other stuff, so lets just keep it :) -Canyon
     clear_page()
     name_label = tk.Label(window, text = f'welcome {username}', font = ('georgia', 30))
     name_label.pack(pady=20)
@@ -240,6 +242,8 @@ def pre_bet (name): #before you bet after welcome function.
     back_button.pack(pady = 20)
     window.bind('<Escape>',lambda event:welcome())
     window.bind('<Return>',lambda event:blind())
+
+
 
 def settings():
     clear_page()
