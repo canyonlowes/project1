@@ -41,6 +41,8 @@ neon_game = "neon2.jpg"
 selected_theme = gold
 home_background = gold
 
+print ('franko and mj are lazy and need to contribute to the GROUP project')
+
 
 #this is where frankos card code was
 
