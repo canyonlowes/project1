@@ -1,3 +1,7 @@
+#couldnt get it to work, replaced with simpler code. Didnt was to delete it so it can here as a monument to Franko
+
+
+
 if card_types == 'Ace' and suits == 'hearts':
     image = Image.open('ace_of_hearts.png')
 if card_types == 'Ace' and suits == 'spades':

@@ -35,6 +35,8 @@ old_fashioned_game = "guns1.jpg"
 old_fashioned_home = "brown1.jpg"
 red = "red1.jpg"
 pink = "pink2.jpg"
+neon_home = "neon1.jpg"
+neon_game = "neon2.jpg"
 
 selected_theme = gold
 home_background = gold
@@ -83,15 +85,15 @@ def welcome (): #welcome screen. (Add settings button and more stuff here)
         elif name =='Ngo':
             Ngo_label = tk.Label(window, text = 'Welcome Professor', font = ('georgia', 15))
             Ngo_label.pack(pady=15)
-            window.after(2000,lambda:pre_bet(name=name_entry.get()))
+            window.after(2000,lambda:pre_bet(name))
         elif name == 'Roberson':
             roberson_label=tk.Label(window,text = 'Welcome Professor',font = ('georgia',15))
             roberson_label.pack(pady=20)
-            window.after(2000,lambda:pre_bet(name=name_entry.get()))
+            window.after(2000,lambda:pre_bet(name))
 
         
         else:
-            window.after(1,lambda:pre_bet(name=name_entry.get()))
+            window.after(1,lambda:pre_bet(name))
     window.bind('<Escape>', lambda event:window.destroy())
 
 def clear_page(): #clears page when called. (Time saver)
@@ -147,7 +149,7 @@ def blind(): #first deal
         bet_entry_flop.pack(pady=20)
         bet_button_flop = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_flop.get(),next = turn))
         bet_button_flop.pack(pady=0)
-        fold_button_flop = tk.Button(window, text = 'Fold', font = ('georgia', 15))
+        fold_button_flop = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
         fold_button_flop.pack(pady=0)
         wallet_label_2 = tk.Label(window, text = f'Wallet: ${wallet}')
         wallet_label_2.pack(pady=0)
@@ -175,12 +177,46 @@ def blind(): #first deal
 
             bet_entry_turn = tk.Entry(window, font = ('georgia', 20))
             bet_entry_turn.pack(pady=20)
-            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command= lambda:test_bet(bet_entry_turn.get(),next = final))
+            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_turn.get(),next = final()))
             bet_button_turn.pack(pady=20)
+            fold_button_turn = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
+            fold_button_turn.pack(pady=0)
+            wallet_label_3=tk.Label(window, text = f'Wallet: ${wallet}')
+            wallet_label_3.pack(pady=0)
 
             def final():
                 
-                bet_entry_turn.destroyb
+                bet_entry_turn.destroy()
+                bet_button_turn.destroy()
+                fold_button_turn.destroy()
+                wallet_label_3.destroy()
+                drawn_cards4 = random.sample(deck, 1)
+
+                for card in drawn_cards4:
+                    deck.remove(card)
+                    image_file = card_images.get(card, None)
+                
+                    if image_file:
+                        image = Image.open(image_file)
+                        image = image.resize((60, 85))
+                        card_photo = ImageTk.PhotoImage(image)
+                    
+                image_label = tk.Label(window, image=card_photo)
+                image_label.image = card_photo  #reference to the image
+                image_label.pack(pady=10)
+
+                bet_entry_final = tk.Entry(window, font = ('georgia', 20))
+                bet_entry_final.pack(pady=20)
+                bet_button_final = tk.Button(window, text = 'BET!', font = ('georgia', 20), command= lambda:test_bet(bet_entry_final.get(),next = test_func))
+                bet_button_final.pack(pady=20)
+                fold_button_final = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
+                fold_button_final.pack(pady=0)
+                wallet_label_4=tk.Label(window, text = f'Wallet: ${wallet}')
+                wallet_label_4.pack(pady=0)
+
+                def test_func ():
+                    print ('wondertastic test function :)')
+
 
     
     clear_page() 
@@ -305,6 +341,9 @@ def background_menu():
         old_fashioned_button = tk.Button(window, text = 'Old Fashioned', font = ('georgia', 20),command=lambda:commit_theme(old_fashioned_game))
         old_fashioned_button.pack(pady = 0)
 
+        neon_button = tk.Button(window, text = 'Neon', font = ('Georgia',20),command=lambda:commit_theme(neon_game))
+        neon_button.pack(pady=0)
+
 
         back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:background_menu())
         back_button.pack(pady = 50)
@@ -322,8 +361,11 @@ def commit_theme(theme):
     elif selected_theme == old_fashioned_game:
         home_background=old_fashioned_home
         welcome()
+    elif selected_theme == neon_game:
+        home_background=neon_game
+        welcome()
     else:
-        home_background=gold
+        home_background=theme
         welcome()
 
 
