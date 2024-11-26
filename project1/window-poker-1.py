@@ -34,7 +34,7 @@ black = "black1.jpg"
 old_fashioned_game = "guns1.jpg"
 old_fashioned_home = "brown1.jpg"
 red = "red1.jpg"
-pink = "pink2.jpg"
+pink = "pink.jpg"
 neon_home = "neon1.jpg"
 neon_game = "neon2.jpg"
 
