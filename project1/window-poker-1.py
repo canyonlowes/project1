@@ -92,6 +92,11 @@ def welcome (): #welcome screen. (Add settings button and more stuff here)
             roberson_label=tk.Label(window,text = 'Welcome Professor',font = ('georgia',15))
             roberson_label.pack(pady=20)
             window.after(2000,lambda:pre_bet(name))
+        elif name == 'Mia':
+            Mia_label = tk.Label(window,bg='hot pink',text = 'Hi Mia!',font = ('georgia',20))
+            Mia_label.pack(pady = 15)
+            window.after(2000, lambda:pre_bet(name))
+
 
         
         else:
