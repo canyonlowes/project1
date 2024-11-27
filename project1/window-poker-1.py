@@ -34,7 +34,6 @@ black = "black1.jpg"
 old_fashioned_game = "guns1.jpg"
 old_fashioned_home = "brown1.jpg"
 red = "red1.jpg"
-pink = "pink.jpg"
 neon_home = "neon1.jpg"
 neon_game = "neon2.jpg"
 
@@ -186,7 +185,7 @@ def blind(): #first deal
 
             bet_entry_turn = tk.Entry(window, font = ('georgia', 20))
             bet_entry_turn.pack(pady=20)
-            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_turn.get(),next = final()))
+            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_turn.get(),next = final))
             bet_button_turn.pack(pady=20)
             fold_button_turn = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
             fold_button_turn.pack(pady=0)
@@ -331,9 +330,6 @@ def background_menu():
 
         red_button = tk.Button(window, text = 'Red', font = ('georgia', 20), command=lambda:commit_theme(red))
         red_button.pack(pady=0)
-
-        pink_button = tk.Button(window, text = 'Pink', font = ('georgia', 20), command=lambda:commit_theme(pink))
-        pink_button.pack(pady=0)
 
         back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:background_menu())
         back_button.pack(pady = 50)

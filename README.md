@@ -1,11 +1,8 @@
 TODO
 
-Add cards to player-canyon
-background images-mj/franko
-finish flop-finaly-canyon
-settings page-mj
-hands in corner-franko
-gay sex - all
+add cards to player and computer
+make interface look nice with .grid for cards
+figure out why turn is not checking the value entered
 
 canyons thoughts:
 Add credits/attributions for background images and other images used
