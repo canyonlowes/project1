@@ -41,7 +41,7 @@ neon_game = "neon2.jpg"
 selected_theme = gold
 home_background = gold
 
-print ('franko and mj are lazy and need to contribute to the GROUP project')
+
 
 
 #this is where frankos card code was
@@ -71,6 +71,8 @@ def welcome (): #welcome screen. (Add settings button and more stuff here)
     wallet_label.pack(pady=0)
     window.bind('<Return>', lambda event: test_name(name=name_entry.get()))
 
+
+
     def test_name(name): #checks if name is valid (name must be betweein 1 and 10 letters and no spaces)
         if len(name) == 0:
             bad_username_label = tk.Label(window, text = 'Please enter a username between 1 and 10 character(s)', font = ('georgia', 10))
@@ -92,7 +94,7 @@ def welcome (): #welcome screen. (Add settings button and more stuff here)
             roberson_label=tk.Label(window,text = 'Welcome Professor',font = ('georgia',15))
             roberson_label.pack(pady=20)
             window.after(2000,lambda:pre_bet(name))
-        elif name == 'Mia':
+        elif name == 'Mia': # I was giving a lesson on tkinter, so now this is here, yeah
             Mia_label = tk.Label(window,bg='hot pink',text = 'Hi Mia!',font = ('georgia',20))
             Mia_label.pack(pady = 15)
             window.after(2000, lambda:pre_bet(name))
