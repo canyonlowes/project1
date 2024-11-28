@@ -224,6 +224,11 @@ def blind(): #first deal
 
                 def test_func ():
                     print ('wondertastic test function :)')
+                    clear_page()
+                    placeholder_label = tk.Label(window, text = 'One day, this will show\n if you won or lost, and how much you won\n or lost.', font = ('georgia',15))
+                    placeholder_label.pack(pady=10)
+                    home_button = tk.Button(window, text = 'home (will be changed later)',font = ('georgia',20),command=lambda:welcome())
+                    home_button.pack()
 
 
     
@@ -276,7 +281,6 @@ def pre_bet (name): #before you bet after welcome function.
     window.bg_image = bg_image  #Stores the image as a part of the window
     bg_label = tk.Label(window, image=bg_image)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-    #username = str(name)#We dont necessarily need this, but if I remove it I have to redo a bunch of other stuff, so lets just keep it :) -Canyon
     clear_page()
     name_label = tk.Label(window, text = f'welcome {username}', font = ('georgia', 30))
     name_label.pack(pady=20)
@@ -291,18 +295,35 @@ def pre_bet (name): #before you bet after welcome function.
 
 def settings():
     clear_page()
-    image = Image.open(selected_theme)
+    '''image = Image.open(selected_theme)
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
     bg_image = ImageTk.PhotoImage(resized_image)
     window.bg_image = bg_image
     bg_label = tk.Label(window, image=bg_image)
-    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)'''#i think we can delete this, but dont delete it yet. -Canyon
     
     settings_label = tk.Label(window, text='Settings', font=('Georgia', 20))
     settings_label.pack(pady=20)
     
     background_button = tk.Button(window, text='Change Background', font=('Georgia', 20), command=background_menu)
-    background_button.pack(pady=20)
+    background_button.pack(pady=10)
+
+    credits_button = tk.Button(window, text = "Credits And Attributions", font = ('georgia',20),command=lambda:credits())
+    credits_button.pack(pady=10)
+    back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:welcome())
+    back_button.pack()
+
+def credits ():
+    clear_page()
+    Credits_label = tk.Label(window, text = "Credits And Attributions", font = ('georgia',20))
+    Credits_label.pack(pady = 20)
+    devs_label = tk.Label(window, text = 'Developers',font = ('georgia',15))
+    devs_label.pack(pady=5)
+    team_label = tk.Label(window, text = 'Canyon Lowes\nMJ rodriguez\nFranko Suarez')
+    team_label.pack(pady = 5)
+    back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:settings())
+    back_button.pack()
+
 
 def background_menu():
     clear_page()
@@ -312,6 +333,8 @@ def background_menu():
     color_button.pack(pady = 20)
     other_button = tk.Button(window, text = 'Other', font = ('georgia', 20),command=lambda:other_bg())
     other_button.pack(pady = 20)
+    back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:settings())
+    back_button.pack()
     
     def colors():
         clear_page()  
