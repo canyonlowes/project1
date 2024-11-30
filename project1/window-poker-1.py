@@ -133,7 +133,7 @@ def blind(): #first deal
     
 
     def flop():
-        bet_enter_label.destroy()
+        #bet_enter_label.destroy()
         bet_amount_entry.destroy()
         bet_button.destroy()
         fold_button.destroy()
@@ -149,9 +149,9 @@ def blind(): #first deal
                 image = image.resize((60, 85))
                 card_photo = ImageTk.PhotoImage(image)
                 
-            image_label = tk.Label(window, image=card_photo)
+            image_label = tk.Label(image_frame, bg='black', image=card_photo)
             image_label.image = card_photo  #reference to the image
-            image_label.pack(pady=10)
+            image_label.pack(pady=10,side='left',padx=5)
 
         bet_entry_flop = tk.Entry(window, font = ('georgia', 20))
         bet_entry_flop.pack(pady=20)
@@ -179,14 +179,14 @@ def blind(): #first deal
                     image = image.resize((60, 85))
                     card_photo = ImageTk.PhotoImage(image)
                     
-                image_label = tk.Label(window, image=card_photo)
+                image_label = tk.Label(image_frame, bg='black', image=card_photo)
                 image_label.image = card_photo  #reference to the image
-                image_label.pack(pady=10)
+                image_label.pack(pady=10,side='left',padx=5)
 
             bet_entry_turn = tk.Entry(window, font = ('georgia', 20))
             bet_entry_turn.pack(pady=20)
             bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_turn.get(),next = final))
-            bet_button_turn.pack(pady=20)
+            bet_button_turn.pack(pady=0)
             fold_button_turn = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
             fold_button_turn.pack(pady=0)
             wallet_label_3=tk.Label(window, text = f'Wallet: ${wallet}')
@@ -209,14 +209,14 @@ def blind(): #first deal
                         image = image.resize((60, 85))
                         card_photo = ImageTk.PhotoImage(image)
                     
-                image_label = tk.Label(window, image=card_photo)
+                image_label = tk.Label(image_frame, bg='black', image=card_photo)
                 image_label.image = card_photo  #reference to the image
-                image_label.pack(pady=10)
+                image_label.pack(pady=10,side='left',padx=5)
 
                 bet_entry_final = tk.Entry(window, font = ('georgia', 20))
                 bet_entry_final.pack(pady=20)
                 bet_button_final = tk.Button(window, text = 'BET!', font = ('georgia', 20), command= lambda:test_bet(bet_entry_final.get(),next = test_func))
-                bet_button_final.pack(pady=20)
+                bet_button_final.pack(pady=0)
                 fold_button_final = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
                 fold_button_final.pack(pady=0)
                 wallet_label_4=tk.Label(window, text = f'Wallet: ${wallet}')
@@ -233,8 +233,14 @@ def blind(): #first deal
 
     
     clear_page() 
+
+    com_cards_label = tk.Label(window, text = 'Community Cards',font = ('georgia',15))
+    com_cards_label.pack(pady=5)
     
     drawn_cards = random.sample(deck, 3)
+
+    image_frame = tk.Frame(window)
+    image_frame.pack(side='top', pady=10)
 
     for card in drawn_cards:
         deck.remove(card)
@@ -245,9 +251,9 @@ def blind(): #first deal
             image = image.resize((60, 85))
             card_photo = ImageTk.PhotoImage(image)
             
-            image_label = tk.Label(window, image=card_photo)
-            image_label.image = card_photo  #reference to the image
-            image_label.pack(pady=10)
+            image_label = tk.Label(image_frame,bg='black', image=card_photo)
+            image_label.image = card_photo  #reference to the image, keeps it from being trashed
+            image_label.pack(pady=10,side='left',padx=5)
 
     bet_enter_label = tk.Label(window, text = 'enter bet', font = ('georgia', 20))
     bet_enter_label.pack(pady = 20)
@@ -259,7 +265,7 @@ def blind(): #first deal
     fold_button.pack(pady=0)
     wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
-    window.bind('<Return>', lambda event:test_bet(bet_amount_entry.get(),next = flop))
+   # window.bind('<Return>', lambda event:test_bet(bet_amount_entry.get(),next = flop))
 
 def fold (): #if player folds
     wallet_fold_label = tk.Label(window, text = f'${wallet} remaining', font = ('georgia', 10))
