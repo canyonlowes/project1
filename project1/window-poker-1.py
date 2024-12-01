@@ -19,6 +19,7 @@ for rank in card_types:
         card_images[f'{rank} of {suit}'] = f'{rank.lower()}_of_{suit}.png'
 
 wallet = int(100)
+player_bet = int(0)
 
 username=''#this will allow us to remember username, idk why i didnt think of this sooner
 
@@ -40,15 +41,9 @@ neon_game = "neon2.jpg"
 selected_theme = gold
 home_background = gold
 
-
-
-
 #this is where frankos card code was
 
-
-
-
-def welcome (): #welcome screen. (Add settings button and more stuff here)
+def welcome (): #welcome screen. 
     global username
     clear_page()
     image = Image.open(home_background)
@@ -112,23 +107,29 @@ def clear_page(): #clears page when called. (Time saver)
 
 def blind(): #first deal
     global wallet
+    global player_bet
     def test_bet(bet,next): #checks if your bet is allowed (<= wallet and int)
         global wallet
+        global player_bet
         try:
             bet_amount = int(bet,) #checks if bet can be made an int
             if bet_amount > wallet: #bet more than you have
                 not_enough_label = tk.Label(window, text = f'Not enough money. Max bet ${wallet}', font=('georgia', 10))
-                not_enough_label.pack(pady=20)
+                not_enough_label.pack(pady=10)
                 window.after(2000, not_enough_label.destroy)
+            elif bet_amount <1:
+                negitve_label = tk.Label(window, text = 'You must bet at least $1',font = ('georgia',10))
+                negitve_label.pack(pady = 10)
             else: #bet less than or equal to what you have
-                wallet = wallet - bet_amount
+                wallet-=bet_amount
+                player_bet+=bet_amount
                 total_betting_label = tk.Label(window, text = f'Betting ${bet_amount}. ${wallet} remaining', font = ('georgia', 10))
-                total_betting_label.pack(pady = 20)
+                total_betting_label.pack(pady = 10)
                 window.after(1000, total_betting_label.destroy)
                 window.after(1000, lambda: next())
         except: #bet was either a decimal or text
             error_label = tk.Label(window, text = 'Invalid number', font = ('georgia', 20)) #bet cannot be made an int
-            error_label.pack(pady = 20)
+            error_label.pack(pady = 10)
             window.after(2000, error_label.destroy)
     
 
@@ -149,7 +150,7 @@ def blind(): #first deal
                 image = image.resize((60, 85))
                 card_photo = ImageTk.PhotoImage(image)
                 
-            image_label = tk.Label(image_frame, bg='black', image=card_photo)
+            image_label = tk.Label(com_frame, bg='black', image=card_photo)
             image_label.image = card_photo  #reference to the image
             image_label.pack(pady=10,side='left',padx=5)
 
@@ -179,68 +180,46 @@ def blind(): #first deal
                     image = image.resize((60, 85))
                     card_photo = ImageTk.PhotoImage(image)
                     
-                image_label = tk.Label(image_frame, bg='black', image=card_photo)
+                image_label = tk.Label(com_frame, bg='black', image=card_photo)
                 image_label.image = card_photo  #reference to the image
                 image_label.pack(pady=10,side='left',padx=5)
 
             bet_entry_turn = tk.Entry(window, font = ('georgia', 20))
             bet_entry_turn.pack(pady=20)
-            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_turn.get(),next = final))
+            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_turn.get(),next = test_func))
             bet_button_turn.pack(pady=0)
             fold_button_turn = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
             fold_button_turn.pack(pady=0)
             wallet_label_3=tk.Label(window, text = f'Wallet: ${wallet}')
             wallet_label_3.pack(pady=0)
 
-            def final():
-                
-                bet_entry_turn.destroy()
-                bet_button_turn.destroy()
-                fold_button_turn.destroy()
-                wallet_label_3.destroy()
-                drawn_cards4 = random.sample(deck, 1)
 
-                for card in drawn_cards4:
-                    deck.remove(card)
-                    image_file = card_images.get(card, None)
-                
-                    if image_file:
-                        image = Image.open(image_file)
-                        image = image.resize((60, 85))
-                        card_photo = ImageTk.PhotoImage(image)
-                    
-                image_label = tk.Label(image_frame, bg='black', image=card_photo)
-                image_label.image = card_photo  #reference to the image
-                image_label.pack(pady=10,side='left',padx=5)
+            def test_func ():
+                print ('wondertastic test function :)')
+                clear_page()
+                placeholder_label = tk.Label(window, text = 'One day, this will show\n if you won or lost, and how much you won\n or lost.', font = ('georgia',15))
+                placeholder_label.pack(pady=10)
+                home_button = tk.Button(window, text = 'home (will be changed later)',font = ('georgia',20),command=lambda:welcome())
+                home_button.pack()
+                total_bet_label = tk.Label(window, text = player_bet,font = ('georgia',15))
+                total_bet_label.pack()
 
-                bet_entry_final = tk.Entry(window, font = ('georgia', 20))
-                bet_entry_final.pack(pady=20)
-                bet_button_final = tk.Button(window, text = 'BET!', font = ('georgia', 20), command= lambda:test_bet(bet_entry_final.get(),next = test_func))
-                bet_button_final.pack(pady=0)
-                fold_button_final = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
-                fold_button_final.pack(pady=0)
-                wallet_label_4=tk.Label(window, text = f'Wallet: ${wallet}')
-                wallet_label_4.pack(pady=0)
-
-                def test_func ():
-                    print ('wondertastic test function :)')
-                    clear_page()
-                    placeholder_label = tk.Label(window, text = 'One day, this will show\n if you won or lost, and how much you won\n or lost.', font = ('georgia',15))
-                    placeholder_label.pack(pady=10)
-                    home_button = tk.Button(window, text = 'home (will be changed later)',font = ('georgia',20),command=lambda:welcome())
-                    home_button.pack()
-
-
-    
     clear_page() 
 
     com_cards_label = tk.Label(window, text = 'Community Cards',font = ('georgia',15))
+
     com_cards_label.pack(pady=5)
     
     drawn_cards = random.sample(deck, 3)
 
-    image_frame = tk.Frame(window)
-    image_frame.pack(side='top', pady=10)
+    com_frame = tk.Frame(window) #com cards
+    com_frame.pack(side='top', pady=10)
+
+    hand_label = tk.Label(window, text = 'Your Hand',font = ('georgia',20))
+    hand_label.pack()
+
+    hand_frame=tk.Frame(window) #your hand
+    hand_frame.pack(pady=10)
 
     for card in drawn_cards:
         deck.remove(card)
@@ -251,7 +230,22 @@ def blind(): #first deal
             image = image.resize((60, 85))
             card_photo = ImageTk.PhotoImage(image)
             
-            image_label = tk.Label(image_frame,bg='black', image=card_photo)
+            image_label = tk.Label(com_frame,bg='black', image=card_photo)
+            image_label.image = card_photo 
+            image_label.pack(pady=10,side='left',padx=5)
+    
+    player_cards = random.sample(deck,2)
+    
+    for card in player_cards:
+        deck.remove(card)
+        image_file=card_images.get(card, None)
+
+        if image_file:
+            image = Image.open(image_file)
+            image = image.resize((60, 85))
+            card_photo = ImageTk.PhotoImage(image)
+            
+            image_label = tk.Label(hand_frame,bg='black', image=card_photo)
             image_label.image = card_photo  #reference to the image, keeps it from being trashed
             image_label.pack(pady=10,side='left',padx=5)
 
