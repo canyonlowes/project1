@@ -18,6 +18,9 @@ for rank in card_types:
     for suit in suits:
         card_images[f'{rank} of {suit}'] = f'{rank.lower()}_of_{suit}.png'
 
+poker_hands_dict={'royal_flush':10,'straight_flush':9,'four_of_a_kind':8,'full_house':7,'flush':6,'straight':5,'three_of_a_kind':4}
+
+
 wallet = int(100)
 player_bet = int(0)
 
@@ -186,7 +189,7 @@ def blind(): #first deal
 
             bet_entry_turn = tk.Entry(window, font = ('georgia', 20))
             bet_entry_turn.pack(pady=20)
-            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_turn.get(),next = test_func))
+            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_turn.get(),next = showdown))
             bet_button_turn.pack(pady=0)
             fold_button_turn = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
             fold_button_turn.pack(pady=0)
@@ -194,15 +197,38 @@ def blind(): #first deal
             wallet_label_3.pack(pady=0)
 
 
-            def test_func ():
-                print ('wondertastic test function :)')
-                clear_page()
-                placeholder_label = tk.Label(window, text = 'One day, this will show\n if you won or lost, and how much you won\n or lost.', font = ('georgia',15))
-                placeholder_label.pack(pady=10)
-                home_button = tk.Button(window, text = 'home (will be changed later)',font = ('georgia',20),command=lambda:welcome())
-                home_button.pack()
-                total_bet_label = tk.Label(window, text = player_bet,font = ('georgia',15))
-                total_bet_label.pack()
+            def showdown ():
+                bet_entry_turn.destroy()
+                bet_button_turn.destroy()
+                fold_button_turn.destroy()
+                wallet_label_3.destroy()
+
+                comp_cards_label = tk.Label(comp_frame, text = 'Dealers Cards', font = ('georgia',20))
+                comp_cards_label.pack()
+
+
+                computer_cards = random.sample(deck,2)
+    
+                for card in computer_cards: #computer cards-revealed at end of game to determine if you won or lost. 
+                    deck.remove(card)
+                    image_file=card_images.get(card, None)
+
+                    if image_file:
+                        image = Image.open(image_file)
+                        image = image.resize((60, 85))
+                        card_photo = ImageTk.PhotoImage(image)
+
+                        
+                        image_label = tk.Label(comp_frame,bg='black', image=card_photo) 
+                        image_label.image = card_photo
+                        image_label.pack(pady=10,side='left',padx=5)
+                '''def royal_flush_test ():
+                    if suit == 'hearts':
+                        if rank == '10' and 'Ace' and 'Jack' and 'Queen' and 'King':'''
+
+
+                
+
 
     clear_page() 
 
@@ -210,7 +236,7 @@ def blind(): #first deal
 
     com_cards_label.pack(pady=5)
     
-    drawn_cards = random.sample(deck, 3)
+    drawn_cards = random.sample(deck, 1)
 
     com_frame = tk.Frame(window) #com cards
     com_frame.pack(side='top', pady=10)
@@ -218,7 +244,7 @@ def blind(): #first deal
     hand_label = tk.Label(window, text = 'Your Hand',font = ('georgia',20))
     hand_label.pack()
 
-    hand_frame=tk.Frame(window) #your hand
+    hand_frame=tk.Frame(window) #your hand frame
     hand_frame.pack(pady=10)
 
     for card in drawn_cards:
@@ -249,22 +275,6 @@ def blind(): #first deal
             image_label.image = card_photo  #reference to the image, keeps it from being trashed
             image_label.pack(pady=10,side='left',padx=5)
 
-    computer_cards = random.sample(deck,2)
-    
-    for card in computer_cards:
-        deck.remove(card)
-        image_file=card_images.get(card, None)
-
-        if image_file:
-            image = Image.open(image_file)
-            image = image.resize((60, 85))
-            card_photo = ImageTk.PhotoImage(image)
-
-            
-            '''image_label = tk.Label(hand_frame,bg='black', image=card_photo) Keeping this hidden cause we dont need to see
-            the computers cards for now, they will be shown in the end to show if you won or lost. 
-            image_label.image = card_photo
-            image_label.pack(pady=10,side='left',padx=5)'''
 
     bet_enter_label = tk.Label(window, text = 'enter bet', font = ('georgia', 20))
     bet_enter_label.pack(pady = 20)
@@ -276,6 +286,10 @@ def blind(): #first deal
     fold_button.pack(pady=0)
     wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
+
+    comp_frame=tk.Frame(window) #computers hand
+    comp_frame.pack(pady=10)
+
    # window.bind('<Return>', lambda event:test_bet(bet_amount_entry.get(),next = flop))
 def fold (): #if player folds
     wallet_fold_label = tk.Label(window, text = f'${wallet} remaining', font = ('georgia', 10))
