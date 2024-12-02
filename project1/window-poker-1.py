@@ -234,7 +234,7 @@ def blind(): #first deal
             image_label.image = card_photo 
             image_label.pack(pady=10,side='left',padx=5)
     
-    player_cards = random.sample(deck,2)
+    player_cards = random.sample(deck,2)#player hand
     
     for card in player_cards:
         deck.remove(card)
@@ -249,6 +249,23 @@ def blind(): #first deal
             image_label.image = card_photo  #reference to the image, keeps it from being trashed
             image_label.pack(pady=10,side='left',padx=5)
 
+    computer_cards = random.sample(deck,2)
+    
+    for card in computer_cards:
+        deck.remove(card)
+        image_file=card_images.get(card, None)
+
+        if image_file:
+            image = Image.open(image_file)
+            image = image.resize((60, 85))
+            card_photo = ImageTk.PhotoImage(image)
+
+            
+            '''image_label = tk.Label(hand_frame,bg='black', image=card_photo) Keeping this hidden cause we dont need to see
+            the computers cards for now, they will be shown in the end to show if you won or lost. 
+            image_label.image = card_photo
+            image_label.pack(pady=10,side='left',padx=5)'''
+
     bet_enter_label = tk.Label(window, text = 'enter bet', font = ('georgia', 20))
     bet_enter_label.pack(pady = 20)
     bet_amount_entry = tk.Entry(window, font = ('georgia', 20))
@@ -260,7 +277,6 @@ def blind(): #first deal
     wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
    # window.bind('<Return>', lambda event:test_bet(bet_amount_entry.get(),next = flop))
-
 def fold (): #if player folds
     wallet_fold_label = tk.Label(window, text = f'${wallet} remaining', font = ('georgia', 10))
     wallet_fold_label.pack(pady=20)
