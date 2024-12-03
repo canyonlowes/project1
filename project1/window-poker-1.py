@@ -4,7 +4,7 @@ import tkinter as tk
 from collections import Counter
 
 window = tk.Tk()
-window.geometry("500x500")
+window.geometry("1000x700")
 fullscreen = False
 
 # change to make full screen before release (or do something with settings)
