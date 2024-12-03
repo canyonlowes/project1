@@ -108,7 +108,38 @@ def test_name(name):  # checks if name is valid (name must be betweein 1 and 10 
                                   font=('georgia', 15))
         roberson_label.pack(pady=20)
         window.after(2000, lambda: pre_bet(name))
-   
+    elif name == 'Roberson':
+            roberson_label = tk.Label(window, text = 'Welcome Dr. Roberson', font = ('georgia',15))
+            roberson_label.pack()
+            window.after(2000, lambda:pre_bet(name))
+    elif name == 'Cazalas':
+            cazalas_label = tk.Label(window, text = 'Welcome Dr. Cazalas', font = ('georgia',15))
+            cazalas_label.pack()
+            window.after(2000, lambda:pre_bet(name))
+    elif name == 'Eicholtz':
+            eicholtz_label = tk.Label(window, text = 'Welcome Dr. Eicholtz', font = ('georgia',15))
+            eicholtz_label.pack()
+            window.after(2000, lambda:pre_bet(name))
+    elif name == 'Burke':
+            burke_label = tk.Label(window, text = 'Welcome Dr. Burke ', font = ('georgia',15))
+            burke_label.pack()
+            window.after(2000, lambda:pre_bet(name))
+    elif name == 'Canyon':
+            canyon_label = tk.Label(window,bg = 'forest green',fg='old lace', text = 'Welcome Canyon', font = ('georiga',15))
+            canyon_label.pack()
+            window.after(2000, lambda:pre_bet(name))
+    elif name == 'Mj':
+            mj_label = tk.Label(window, bg='red4', fg='white',text = 'Hola MJ', font = ('georgia',15))
+            mj_label.pack()
+            window.after(2000, lambda:pre_bet(name))
+    elif name == 'Ryo':
+            ryo_label = tk.Label(window,bg='maroon',fg='white', text = 'Welcome Master Miyagi', font = ('georgia',15))
+            ryo_label.pack()
+            window.after(2000,lambda:pre_bet(name))
+    elif name == 'Franko':
+            franko_label = tk.Label(window, bg = 'cyan2', fg='white', text = 'Hello Freaky Franko!', font = ('georiga',15))
+            franko_label.pack()
+            window.after(2000, lambda:pre_bet(name))
     else:
         window.after(1, lambda: pre_bet(name))
     window.bind('<Escape>', lambda event: window.destroy())
@@ -307,8 +338,8 @@ def fold (): #if player folds
     wallet_fold_label.pack(pady=20)
     folding_label=tk.Label(window, text = 'Folding', font = ('georgia', 10))
     folding_label.pack(pady=20)
-    window.after(2,lambda:clear_page())
-    window.after(1000, lambda:pre_bet(username))
+    window.after(2000,lambda:clear_page())
+    window.after(3000, lambda:pre_bet(username))
 
 
 
@@ -380,7 +411,7 @@ def background_menu():
     def colors():
         clear_page()  
 
-        green_button = tk.Button(window, text='Green', font=('Georgia', 20), command=lambda: commit_theme(green))
+        green_button = tk.Button(window, bg ='green4',fg='white',text='Green', font=('Georgia', 20), command=lambda: commit_theme(green))
         green_button.pack(pady=0)
     
         gold_button = tk.Button(window, text=' Gold ', font=('Georgia', 20), command=lambda: commit_theme(gold))
@@ -398,19 +429,19 @@ def background_menu():
         back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:background_menu())
         back_button.pack(pady = 50)
     
-    def other_bg ():#themes that are more than colors, like cats 🐈
+    def other_bg ():#themes that are more than colors
         clear_page()
 
-        cat_button = tk.Button(window, text = ' Cats  ', font = ('georgia', 20),command=lambda:commit_theme(cat_game_background))
+        cat_button = tk.Button(window,bg = 'DarkGoldenrod1',fg='Black', text = ' Cats  ', font = ('georgia', 20),command=lambda:commit_theme(cat_game_background))
         cat_button.pack(pady = 0)
 
-        christmas_button = tk.Button(window, text = 'Christmas', font = ('georgia', 20),command=lambda:commit_theme(christmas_game_background))
+        christmas_button = tk.Button(window,bg='green2',fg ='red2',text= 'Christmas', font = ('georgia', 20),command=lambda:commit_theme(christmas_game_background))
         christmas_button.pack(pady = 0)
 
-        old_fashioned_button = tk.Button(window, text = 'Old Fashioned', font = ('georgia', 20),command=lambda:commit_theme(old_fashioned_game))
+        old_fashioned_button = tk.Button(window, bg = 'bisque2', fg = 'black',text = 'Old Fashioned', font = ('georgia', 20),command=lambda:commit_theme(old_fashioned_game))
         old_fashioned_button.pack(pady = 0)
 
-        neon_button = tk.Button(window, text = 'Neon', font = ('Georgia',20),command=lambda:commit_theme(neon_game))
+        neon_button = tk.Button(window, bg = 'DarkOrchid2',fg = 'deep sky blue', text = 'Neon', font = ('Georgia',20),command=lambda:commit_theme(neon_game))
         neon_button.pack(pady=0)
 
 
