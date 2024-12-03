@@ -55,7 +55,6 @@ neon_game = "neon2.jpg"
 selected_theme = gold
 home_background = gold
 
-# this is where frankos card code was
 
 
 def welcome():       # welcome screen.
