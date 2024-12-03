@@ -413,7 +413,7 @@ def background_menu():
         christmas_button.pack(pady = 0)
 
         old_fashioned_button = tk.Button(window, text = 'Old Fashioned', font = ('georgia', 20),command=lambda:commit_theme(old_fashioned_game))
-        old_fashioned_button.pack(pady = 0)
+        old_fashioned_button.pack(pady=0)
 
         neon_button = tk.Button(window, text = 'Neon', font = ('Georgia',20),command=lambda:commit_theme(neon_game))
         neon_button.pack(pady=0)
