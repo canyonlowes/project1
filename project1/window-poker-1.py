@@ -3,14 +3,19 @@ from PIL import Image, ImageTk
 import tkinter as tk
 
 window = tk.Tk()
-window.geometry("500x500")#change to make full screen before relese (or do something with settings)
+window.geometry("500x500")
+
+# change to make full screen before release (or do something with settings)
+
 window.title('Poker')
 
-card_types = ['Ace','2','3','4','5','6','7','8','9','10','Jack','Queen','King']
-suits = ['hearts','diamonds','spades','clubs']
+card_types = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack',
+              'Queen', 'King']
+
+suits = ['hearts', 'diamonds', 'spades', 'clubs']
 deck = [f'{rank} of {suit}' for rank in card_types for suit in suits]
 
-#dictionary to map card names to image files
+# dictionary to map card names to image files
 card_images = {}
 
 # Populates the dictionary with the card images
@@ -18,17 +23,23 @@ for rank in card_types:
     for suit in suits:
         card_images[f'{rank} of {suit}'] = f'{rank.lower()}_of_{suit}.png'
 
-poker_hands_dict={'royal_flush':10,'straight_flush':9,'four_of_a_kind':8,'full_house':7,'flush':6,'straight':5,'three_of_a_kind':4}
+poker_hands_dict = {'royal_flush': 10, 'straight_flush': 9,
+                    'four_of_a_kind': 8, 'full_house': 7, 'flush': 6,
+                    'straight': 5, 'three_of_a_kind': 4}
 
 
 wallet = int(100)
 player_bet = int(0)
 
-username=''#this will allow us to remember username, idk why i didnt think of this sooner
+username = ' '
+
+# this will allow us to remember username.
 
 
 green = "POKER HOME SCREEN_1.jpg"
-gold = "gold1.jpg" #this is the default home screen. Only replaced by certain themes like cats
+gold = "gold1.jpg"   
+# this is the default home screen. Only replaced by certain themes like cats
+
 cat_home = "cat1.jpg"
 cat_game_background = "cat2.jpg"
 christmas_home = "christmasbg4.jpg"
@@ -44,9 +55,10 @@ neon_game = "neon2.jpg"
 selected_theme = gold
 home_background = gold
 
-#this is where frankos card code was
+# this is where frankos card code was
 
-def welcome (): #welcome screen. 
+
+def welcome():       # welcome screen.
     global username
     clear_page()
     image = Image.open(home_background)
@@ -56,57 +68,56 @@ def welcome (): #welcome screen.
     bg_label = tk.Label(window, image=bg_image)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-    welcome_label = tk.Label(window, text = "Enter name below", font = ("georgia", 20))
+    welcome_label = tk.Label(window, text="Enter name below",
+                             font=("georgia", 20))
     welcome_label.pack(pady=20)
-    name_entry = tk.Entry(window, font = ("georgia", 20))
+    name_entry = tk.Entry(window, font=("georgia", 20))
     name_entry.pack(pady=20)
-    play_button = tk.Button(window, text = "Play!", font = ("georgia", 20),command=lambda: test_name(name=name_entry.get()))
+    play_button = tk.Button(window, text="Play!", font=("georgia", 20), 
+                            command=lambda: test_name(name=name_entry.get()))
     play_button.pack(pady=20)
-    settings_button = tk.Button(window, text = 'Settings', font = ('georgia', 20), command=lambda:settings())
+    settings_button = tk.Button(window, text='Settings', font=('georgia', 20),
+                                command=lambda: settings())
     settings_button.pack(pady=20)
-    wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
+    wallet_label = tk.Label(window, text=f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
     window.bind('<Return>', lambda event: test_name(name=name_entry.get()))
 
 
+def test_name(name):  # checks if name is valid (name must be betweein 1 and 10 letters and no spaces)
+    if len(name) == 0:
+        bad_username_label = tk.Label(window, text='Please enter a username between 1-10 character(s)',
+                                      font=('georgia', 10))
+        bad_username_label.pack(pady=15)
+        window.after(2000, bad_username_label.destroy)
+    elif len(name) > 10:
+        bad_username_label = tk.Label(window, text='Please enter a username between 1-10 character(s)', font=('georgia', 10))
+        bad_username_label.pack(pady=15)
+        window.after(2000, bad_username_label.destroy)
+    elif name.count(' ') > 0:
+        no_space_username_label = tk.Label(window, text='Username must not contain spaces', font=('georgia', 10))
+        no_space_username_label.pack(pady=15)
+        window.after(2000, no_space_username_label.destroy)
+    elif name == 'Ngo':
+        Ngo_label = tk.Label(window, text='Welcome Professor',
+                             font=('georgia', 15))
+        Ngo_label.pack(pady=15)
+        window.after(2000, lambda: pre_bet(name))
+    elif name == 'Roberson':
+        roberson_label = tk.Label(window, text='Welcome Professor',
+                                  font=('georgia', 15))
+        roberson_label.pack(pady=20)
+        window.after(2000, lambda: pre_bet(name))
+   
+    else:
+        window.after(1, lambda: pre_bet(name))
+    window.bind('<Escape>', lambda event: window.destroy())
 
-    def test_name(name): #checks if name is valid (name must be betweein 1 and 10 letters and no spaces)
-        if len(name) == 0:
-            bad_username_label = tk.Label(window, text = 'Please enter a username between 1 and 10 character(s)', font = ('georgia', 10))
-            bad_username_label.pack(pady = 15)
-            window.after(2000,bad_username_label.destroy)
-        elif len(name) > 10:
-            bad_username_label = tk.Label(window, text = 'Please enter a username between 1 and 10 character(s)', font = ('georgia', 10))
-            bad_username_label.pack(pady = 15)
-            window.after(2000,bad_username_label.destroy)
-        elif name.count(' ') > 0:
-            no_space_username_label = tk.Label(window, text = 'Username must not contain spaces', font = ('georgia', 10))
-            no_space_username_label.pack(pady=15)
-            window.after(2000,no_space_username_label.destroy)
-        elif name =='Ngo':
-            Ngo_label = tk.Label(window, text = 'Welcome Professor', font = ('georgia', 15))
-            Ngo_label.pack(pady=15)
-            window.after(2000,lambda:pre_bet(name))
-        elif name == 'Roberson':
-            roberson_label=tk.Label(window,text = 'Welcome Professor',font = ('georgia',15))
-            roberson_label.pack(pady=20)
-            window.after(2000,lambda:pre_bet(name))
-        elif name == 'Mia': # I was giving a lesson on tkinter, so now this is here, yeah
-            Mia_label = tk.Label(window,bg='hot pink',text = 'Hi Mia!',font = ('georgia',20))
-            Mia_label.pack(pady = 15)
-            window.after(2000, lambda:pre_bet(name))
-
-
-        
-        else:
-            window.after(1,lambda:pre_bet(name))
-    window.bind('<Escape>', lambda event:window.destroy())
 
 def clear_page(): #clears page when called. (Time saver)
     for widget in window.winfo_children():
         widget.pack_forget()
         
-
 
 def blind(): #first deal
     global wallet
@@ -294,8 +305,8 @@ def blind(): #first deal
 def fold (): #if player folds
     wallet_fold_label = tk.Label(window, text = f'${wallet} remaining', font = ('georgia', 10))
     wallet_fold_label.pack(pady=20)
-    folding_lable=tk.Label(window, text = 'Folding', font = ('georgia', 10))
-    folding_lable.pack(pady=20)
+    folding_label=tk.Label(window, text = 'Folding', font = ('georgia', 10))
+    folding_label.pack(pady=20)
     window.after(2,lambda:clear_page())
     window.after(1000, lambda:pre_bet(username))
 
