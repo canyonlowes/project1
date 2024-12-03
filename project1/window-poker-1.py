@@ -4,6 +4,7 @@ import tkinter as tk
 
 window = tk.Tk()
 window.geometry("500x500")
+fullscreen = False
 
 # change to make full screen before release (or do something with settings)
 
@@ -49,7 +50,6 @@ black = "black1.jpg"
 old_fashioned_game = "guns1.jpg"
 old_fashioned_home = "brown1.jpg"
 red = "red1.jpg"
-neon_home = "neon1.jpg"
 neon_game = "neon2.jpg"
 
 selected_theme = gold
@@ -340,12 +340,16 @@ def pre_bet (name): #before you bet after welcome function.
 
 def settings():
     clear_page()
-    '''image = Image.open(selected_theme)
-    resized_image = image.resize((1920, 1080), Image.LANCZOS)
-    bg_image = ImageTk.PhotoImage(resized_image)
-    window.bg_image = bg_image
-    bg_label = tk.Label(window, image=bg_image)
-    bg_label.place(x=0, y=0, relwidth=1, relheight=1)''' # I think we can delete this, but dont delete it yet. -Canyon
+    
+    def fullscreen_control():  # enables / disables fullscreen
+        global fullscreen
+        fullscreen = not fullscreen #change in and out of full screen
+        window.attributes("-fullscreen", fullscreen)  #make full screen
+        if fullscreen:
+            full_screen_button.config(text="Full Screen: ON")
+        else:
+            full_screen_button.config(text="Full Screen: OFF")
+        welcome()
     
     settings_label = tk.Label(window, text='Settings', font=('Georgia', 20))
     settings_label.pack(pady=20)
@@ -353,8 +357,12 @@ def settings():
     background_button = tk.Button(window, text='Change Background', font=('Georgia', 20), command=background_menu)
     background_button.pack(pady=10)
 
+    full_screen_button = tk.Button(window, text = 'Full Screen: OFF',font = ('georiga',20),command=lambda:fullscreen_control())
+    full_screen_button.pack(pady=10)
+
     credits_button = tk.Button(window, text = "Credits And Attributions", font = ('georgia',20),command=lambda:credits())
     credits_button.pack(pady=10)
+
     back_button = tk.Button(window, text = 'Back',font = ('georgia', 10), command=lambda: welcome())
     back_button.pack()
 
@@ -402,24 +410,20 @@ def background_menu():
         back_button = tk.Button(window, text = 'Back',font = ('georgia', 10), command=lambda:background_menu())
         back_button.pack(pady = 50)
     
-    def other_bg ():#themes that are more than colors, like cats 🐈
+    def other_bg ():#themes that are more than colors
         clear_page()
 
-        cat_button = tk.Button(window, text = ' Cats  ', font = ('georgia', 20),command=lambda:commit_theme(cat_game_background))
+        cat_button = tk.Button(window,bg = 'DarkGoldenrod1',fg='Black', text = ' Cats  ', font = ('georgia', 20),command=lambda:commit_theme(cat_game_background))
         cat_button.pack(pady = 0)
 
-        christmas_button = tk.Button(window, text = 'Christmas', font = ('georgia', 20),command=lambda:commit_theme(christmas_game_background))
+        christmas_button = tk.Button(window,bg='green2',fg ='red2',text= 'Christmas', font = ('georgia', 20),command=lambda:commit_theme(christmas_game_background))
         christmas_button.pack(pady = 0)
 
-        old_fashioned_button = tk.Button(window, text = 'Old Fashioned', font = ('georgia', 20),command=lambda:commit_theme(old_fashioned_game))
-        old_fashioned_button.pack(pady=0)
+        old_fashioned_button = tk.Button(window, bg = 'bisque2', fg = 'black',text = 'Old Fashioned', font = ('georgia', 20),command=lambda:commit_theme(old_fashioned_game))
+        old_fashioned_button.pack(pady = 0)
 
-        neon_button = tk.Button(window, text = 'Neon', font = ('Georgia',20),command=lambda:commit_theme(neon_game))
+        neon_button = tk.Button(window, bg = 'DarkOrchid2',fg = 'deep sky blue', text = 'Neon', font = ('Georgia',20),command=lambda:commit_theme(neon_game))
         neon_button.pack(pady=0)
-
-
-        back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:background_menu())
-        back_button.pack(pady = 50)
 
 def commit_theme(theme):
     global selected_theme
