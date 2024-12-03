@@ -83,8 +83,10 @@ def welcome():       # welcome screen.
     wallet_label.pack(pady=0)
     window.bind('<Return>', lambda event: test_name(name=name_entry.get()))
 
+# checks if name is valid(name must be betweein 1 and 10 letters and no spaces)
 
-def test_name(name):  # checks if name is valid (name must be betweein 1 and 10 letters and no spaces)
+
+def test_name(name):  
     if len(name) == 0:
         bad_username_label = tk.Label(window, text='Please enter a username between 1-10 character(s)',
                                       font=('georgia', 10))
@@ -114,39 +116,42 @@ def test_name(name):  # checks if name is valid (name must be betweein 1 and 10 
     window.bind('<Escape>', lambda event: window.destroy())
 
 
-def clear_page(): #clears page when called. (Time saver)
+def clear_page():  # clears page when called. (Time saver)
     for widget in window.winfo_children():
         widget.pack_forget()
         
 
-def blind(): #first deal
+def blind():  # first deal
     global wallet
     global player_bet
-    def test_bet(bet,next): #checks if your bet is allowed (<= wallet and int)
+
+    def test_bet(bet, next):  # checks if your bet is allowed (<= wallet and int)
         global wallet
         global player_bet
         try:
             bet_amount = int(bet,) #checks if bet can be made an int
             if bet_amount > wallet: #bet more than you have
-                not_enough_label = tk.Label(window, text = f'Not enough money. Max bet ${wallet}', font=('georgia', 10))
+                not_enough_label = tk.Label(window, text=f'Not enough money. Max bet ${wallet}', font=('georgia', 10))
                 not_enough_label.pack(pady=10)
                 window.after(2000, not_enough_label.destroy)
-            elif bet_amount <1:
-                negitve_label = tk.Label(window, text = 'You must bet at least $1',font = ('georgia',10))
-                negitve_label.pack(pady = 10)
-            else: #bet less than or equal to what you have
-                wallet-=bet_amount
-                player_bet+=bet_amount
-                total_betting_label = tk.Label(window, text = f'Betting ${bet_amount}. ${wallet} remaining', font = ('georgia', 10))
-                total_betting_label.pack(pady = 10)
+            elif bet_amount < 1:
+                negitve_label = tk.Label(window, text='You must bet at least $1', font=('georgia', 10))
+                negitve_label.pack(pady=10)
+            else:  # bet less than or equal to what you have
+                wallet -= bet_amount
+                player_bet += bet_amount
+                total_betting_label = tk.Label(window, text=f'Betting ${bet_amount}. ${wallet} remaining',
+                                               font=('georgia', 10))
+                total_betting_label.pack(pady=10)
                 window.after(1000, total_betting_label.destroy)
                 window.after(1000, lambda: next())
-        except: #bet was either a decimal or text
-            error_label = tk.Label(window, text = 'Invalid number', font = ('georgia', 20)) #bet cannot be made an int
-            error_label.pack(pady = 10)
+        except:  # bet was either a decimal or text
+            error_label = tk.Label(window, text='Invalid number',
+                                   font=('georgia', 20))  
+            # bet cannot be made an int
+            error_label.pack(pady=10)
             window.after(2000, error_label.destroy)
     
-
     def flop():
         #bet_enter_label.destroy()
         bet_amount_entry.destroy()
@@ -229,8 +234,8 @@ def blind(): #first deal
                         image = image.resize((60, 85))
                         card_photo = ImageTk.PhotoImage(image)
 
-                        
-                        image_label = tk.Label(comp_frame,bg='black', image=card_photo) 
+                        image_label = tk.Label(comp_frame, bg='black',
+                                               image=card_photo) 
                         image_label.image = card_photo
                         image_label.pack(pady=10,side='left',padx=5)
                 '''def royal_flush_test ():
@@ -341,7 +346,7 @@ def settings():
     bg_image = ImageTk.PhotoImage(resized_image)
     window.bg_image = bg_image
     bg_label = tk.Label(window, image=bg_image)
-    bg_label.place(x=0, y=0, relwidth=1, relheight=1)'''#i think we can delete this, but dont delete it yet. -Canyon
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)''' # I think we can delete this, but dont delete it yet. -Canyon
     
     settings_label = tk.Label(window, text='Settings', font=('Georgia', 20))
     settings_label.pack(pady=20)
@@ -351,7 +356,7 @@ def settings():
 
     credits_button = tk.Button(window, text = "Credits And Attributions", font = ('georgia',20),command=lambda:credits())
     credits_button.pack(pady=10)
-    back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:welcome())
+    back_button = tk.Button(window, text = 'Back',font = ('georgia', 10), command=lambda: welcome())
     back_button.pack()
 
 def credits ():
@@ -380,22 +385,22 @@ def background_menu():
     def colors():
         clear_page()  
 
-        green_button = tk.Button(window, text='Green', font=('Georgia', 20), command=lambda: commit_theme(green))
+        green_button = tk.Button(window, text=' Green', font=('Georgia', 20), bg='SpringGreen2', command=lambda: commit_theme(green))
         green_button.pack(pady=0)
     
-        gold_button = tk.Button(window, text=' Gold ', font=('Georgia', 20), command=lambda: commit_theme(gold))
+        gold_button = tk.Button(window, text=' Gold  ', font=('Georgia', 20), bg='gold', command=lambda: commit_theme(gold))
         gold_button.pack(pady=0)
 
-        purple_button = tk.Button(window, text='Purple', font=('Georgia', 20), command=lambda: commit_theme(purple))
+        purple_button = tk.Button(window, text='Purple', font=('Georgia', 20), bg='dark orchid', command=lambda: commit_theme(purple))
         purple_button.pack(pady=0)
 
-        black_button = tk.Button(window, text = 'Black', font = ('georgia', 20), command=lambda:commit_theme(black))
+        black_button = tk.Button(window, text = ' Black ', font = ('georgia', 20), bg='gray1', fg='gray100', command=lambda:commit_theme(black))
         black_button.pack(pady=0)
 
-        red_button = tk.Button(window, text = 'Red', font = ('georgia', 20), command=lambda:commit_theme(red))
+        red_button = tk.Button(window, text = ' Red ', font = ('georgia', 25), bg='red', command=lambda:commit_theme(red))
         red_button.pack(pady=0)
 
-        back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:background_menu())
+        back_button = tk.Button(window, text = 'Back',font = ('georgia', 10), command=lambda:background_menu())
         back_button.pack(pady = 50)
     
     def other_bg ():#themes that are more than colors, like cats 🐈
