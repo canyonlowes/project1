@@ -84,7 +84,15 @@ def welcome():       # welcome screen.
     quit_button = tk.Button(window, text = 'Quit',font = ('georgia',10),command=lambda:quit_game())
     quit_button.pack(pady = 10)  
     def quit_game():
-        window.destroy()  
+        clear_page()
+        a_y_s_label = tk.Label(window,text = 'Are you sure you want to quit?\n 99% of gamblers quit before they win big', font = ('georgia',20))
+        a_y_s_label.pack()
+        yes_button = tk.Button(window,text = 'Yes Quit',font = ('georgia',15),command=lambda:yes_quit())
+        yes_button.pack()
+        no_button = tk.Button(window,text = 'No',font = ('georgia',15),command=lambda:welcome())
+        no_button.pack()
+        def yes_quit():
+            window.destroy()
     window.bind('<Return>', lambda event: test_name(name=name_entry.get()))
 
 # checks if name is valid(name must be betweein 1 and 10 letters and no spaces)
