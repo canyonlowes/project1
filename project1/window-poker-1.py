@@ -80,6 +80,11 @@ def welcome():       # welcome screen.
     settings_button.pack(pady=20)
     wallet_label = tk.Label(window, text=f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
+
+    quit_button = tk.Button(window, text = 'Quit',font = ('georgia',10),command=lambda:quit_game())
+    quit_button.pack(pady = 10)  
+    def quit_game():
+        window.destroy()  
     window.bind('<Return>', lambda event: test_name(name=name_entry.get()))
 
 # checks if name is valid(name must be betweein 1 and 10 letters and no spaces)
@@ -491,6 +496,8 @@ def blind():  # first deal
                     amount_lost_label.pack()
                     
                 def compare_high_cards():
+                    global wallet
+                    global player_bet
                     player_value_ranks = sorted([rank_values[rank] for rank in ranks_player], reverse = True)
                     computer_numeric_ranks = sorted([rank_values[rank] for rank in ranks_computer], reverse=True)
                     for player_rank, computer_rank in zip(player_value_ranks, computer_numeric_ranks):
@@ -596,6 +603,9 @@ def fold (): #if player folds
 
 def pre_bet (name): #before you bet after welcome function.
     global username
+    global wallet
+    global player_bet
+    player_bet = 0
     if name != username:
         username = name
     image = Image.open(selected_theme) 
