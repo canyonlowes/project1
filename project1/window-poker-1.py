@@ -1,6 +1,7 @@
 import random
 from PIL import Image, ImageTk
 import tkinter as tk
+from collections import Counter
 
 window = tk.Tk()
 window.geometry("500x500")
@@ -10,8 +11,7 @@ fullscreen = False
 
 window.title('Poker')
 
-card_types = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack',
-              'Queen', 'King']
+card_types = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack','Queen', 'King']
 
 suits = ['hearts', 'diamonds', 'spades', 'clubs']
 deck = [f'{rank} of {suit}' for rank in card_types for suit in suits]
@@ -26,7 +26,7 @@ for rank in card_types:
 
 poker_hands_dict = {'royal_flush': 10, 'straight_flush': 9,
                     'four_of_a_kind': 8, 'full_house': 7, 'flush': 6,
-                    'straight': 5, 'three_of_a_kind': 4}
+                    'straight': 5, 'three_of_a_kind': 4, 'two_pair': 3, 'pair':2, 'high_card': 1}
 
 
 wallet = int(100)
@@ -187,6 +187,7 @@ def blind():  # first deal
             bet_button_flop.destroy()
             fold_button_flop.destroy()
             wallet_label_2.destroy()
+            global drawn_cards3
             drawn_cards3 = random.sample(deck, 1)
 
             for card in drawn_cards3:
@@ -220,8 +221,7 @@ def blind():  # first deal
 
                 comp_cards_label = tk.Label(comp_frame, text = 'Dealers Cards', font = ('georgia',20))
                 comp_cards_label.pack()
-
-
+                global computer_cards
                 computer_cards = random.sample(deck,2)
     
                 for card in computer_cards: #computer cards-revealed at end of game to determine if you won or lost. 
@@ -237,9 +237,245 @@ def blind():  # first deal
                                                image=card_photo) 
                         image_label.image = card_photo
                         image_label.pack(pady=10,side='left',padx=5)
-                '''def royal_flush_test ():
-                    if suit == 'hearts':
-                        if rank == '10' and 'Ace' and 'Jack' and 'Queen' and 'King':'''
+                def get_player_hand_details():
+                    global ranks_player
+                    global suits_player
+                    ranks_player = []
+                    suits_player = []
+                    for card in drawn_cards3:
+                        rank, suit = card.split( ' of ')
+                        ranks_player.append(rank)
+                        suits_player.append(suit)
+                    for card in player_cards:
+                        rank, suit = card.split( ' of ')
+                        ranks_player.append(rank)
+                        suits_player.append(suit)
+                    return ranks_player, suits_player
+                
+                
+                def get_computer_hand_details():
+                    global ranks_computer
+                    global suits_computer
+                    ranks_computer = []
+                    suits_computer = []
+                    for card in drawn_cards3:
+                        rank, suit = card.split(' of ')
+                        ranks_computer.append(rank)
+                        suits_computer.append(suit)
+                    for card in computer_cards:
+                        rank, suit = card.split(' of ')
+                        ranks_computer.append(rank)
+                        suits_computer.append(suit)
+                    return ranks_computer, suits_computer
+                
+                def evaluate_computer_hand():
+                    get_computer_hand_details()   # This function extract the rank and suit and put them in lists to be checked for hands
+                    global rank_values
+                    rank_values = {'2':2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,'8': 8, '9': 9, '10': 10, 'Jack': 11, 'Queen': 12, 'King': 13, 'Ace': 14}
+                    global computer_rank_values
+                    computer_rank_values = [rank_values[rank] for rank in ranks_computer]
+                    # These lines assigns an integer value to the string value of rank to allow the code to detect straights
+                    
+                    straight()
+                    flush()
+                    four_of_kind()
+                    full_house()
+                    three_of_kind()
+                    two_pair()
+                    pair()
+                    high_card()
+                    
+                    if straight() and flush():
+                        return 'straight_flush'
+                    elif four_of_kind():
+                        return 'four_of_a_kind'
+                    elif full_house():
+                        return 'full_house'
+                    elif flush():
+                        return 'flush'
+                    elif straight():
+                        return 'straight'
+                    elif three_of_kind():
+                        return 'three_of_a_kind'
+                    elif two_pair():
+                        return 'two_pair'
+                    elif pair():
+                        return 'pair'
+                    elif high_card():
+                        return 'high_card'
+                
+                def straight():
+                    sorted_values = sorted(computer_rank_values)
+                    for i in range(len(sorted_values)):
+                        if (sorted_values[i] == sorted_values[i - 1]):
+                            return True
+                        else:
+                            return False
+                
+                def flush():
+                    first_suit = suits_computer[0]
+                    for i in suits_computer:
+                        if i != first_suit:
+                            return True
+                        else:
+                            return False
+                
+                def four_of_kind():
+                    rank_counter = Counter(computer_rank_values)
+                    if 4 in rank_counter.values():
+                        return True
+                    else:
+                        return False
+                
+                def full_house():
+                    rank_counter = Counter(computer_rank_values)
+                    if 3 in rank_counter.values() and 2 in rank_counter.values():
+                        return True
+                
+                def three_of_kind():
+                    rank_counter = Counter(computer_rank_values)        
+                    if 3 in rank_counter.values():
+                        return True    
+                    
+                def two_pair():
+                    rank_counter = Counter(computer_rank_values)
+                    pair_counts =list(rank_counter.values())
+                    if pair_counts.count(2) >= 2:
+                        return True        
+                
+                def pair():
+                    rank_counter = Counter(computer_rank_values)
+                    if 2 in rank_counter.values():
+                        return True
+                            
+                def high_card():
+                    return max(computer_rank_values)        
+                
+                
+                def evaluate_player_hand():
+                    get_player_hand_details()   
+                    
+                    rank_values = {'2':2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,'8': 8, '9': 9, '10': 10, 'Jack': 11, 'Queen': 12, 'King': 13, 'Ace': 14}
+                    global player_rank_values
+                    player_rank_values = [rank_values[rank] for rank in ranks_player]
+                    
+                    straight()
+                    flush()
+                    four_of_kind()
+                    full_house()
+                    three_of_kind()
+                    two_pair()
+                    pair()
+                    high_card()
+                    
+                    if straight() and flush():
+                        return 'straight_flush'
+                    elif four_of_kind():
+                        return 'four_of_a_kind'
+                    elif full_house():
+                        return 'full_house'
+                    elif flush():
+                        return 'flush'
+                    elif straight():
+                        return 'straight'
+                    elif three_of_kind():
+                        return 'three_of_a_kind'
+                    elif two_pair():
+                        return 'two_pair'
+                    elif pair():
+                        return 'pair'
+                    else:
+                        return 'high_card'
+                
+                def straight():
+                    sorted_values = sorted(player_rank_values)
+                    for i in range(1, len(sorted_values)):
+                        if sorted_values[i] != sorted_values[i - 1] + 1:
+                            return False
+                    return True
+                
+                def flush():
+                    first_suit = suits_player[0]
+                    for suit in suits_player:
+                        if suit != first_suit:
+                            return False
+                    return True
+                
+                def four_of_kind():
+                    rank_counter = Counter(player_rank_values)
+                    if 4 in rank_counter.values():
+                        return True
+                    else:
+                        return False
+                
+                def full_house():
+                    rank_counter = Counter(player_rank_values)
+                    if 3 in rank_counter.values() and 2 in rank_counter.values():
+                        return True
+                    return False
+                
+                def three_of_kind():
+                    rank_counter = Counter(player_rank_values)        
+                    if 3 in rank_counter.values():
+                        return True  
+                    else: 
+                        return False
+                    
+                def two_pair():
+                    rank_counter = Counter(player_rank_values)
+                    pair_counts =list(rank_counter.values())
+                    if pair_counts.count(2) >= 2:
+                        return True 
+                    return False
+                
+                def pair():
+                    rank_counter = Counter(player_rank_values)
+                    if 2 in rank_counter.values():
+                        return True
+                    return False
+                
+                def high_card():
+                    return 'high_card'        
+                
+                evaluate_player_hand()
+                evaluate_computer_hand()
+                
+                player_hand_final = evaluate_player_hand()
+                computer_hand_final = evaluate_computer_hand()
+                
+                player_hand_value = poker_hands_dict[player_hand_final]
+                computer_hand_value = poker_hands_dict[computer_hand_final]
+                def player_wins():
+                    clear_page()
+                    player_wins_label = tk.Label (window, text = 'Player Wins!', font = ('georgia',20))
+                    player_wins_label.pack()
+                def computer_wins():
+                    clear_page()
+                    computer_wins_label = tk.Label (window, text = 'Computer Wins!', font = ('gorgia',20))
+                    computer_wins_label.pack()
+                    
+                def compare_high_cards():
+                    player_value_ranks = sorted([rank_values[rank] for rank in ranks_player], reverse = True)
+                    computer_numeric_ranks = sorted([rank_values[rank] for rank in ranks_computer], reverse=True)
+                    for player_rank, computer_rank in zip(player_value_ranks, computer_numeric_ranks):
+                        if player_rank > computer_rank:
+                            player_high_card = tk.Label (window, text = "Player Wins!", font = ("georgia", 20))
+                            player_high_card.pack()
+                            return
+                        elif computer_rank > player_rank:
+                            computer_high_card = tk.Label (window, text = "Computer Wins!", font = ("georgia", 20))
+                            computer_high_card.pack()
+                            return
+                        
+                    tie_label = tk.Label (window, text = "It's a high card tie!", font =("georgia", 20))
+                    tie_label.pack()
+                        
+                if player_hand_value > computer_hand_value:
+                    player_wins()
+                elif computer_hand_value > player_hand_value:
+                    computer_wins()
+                else:
+                    compare_high_cards()
 
 
                 
@@ -275,6 +511,7 @@ def blind():  # first deal
             image_label.image = card_photo 
             image_label.pack(pady=10,side='left',padx=5)
     
+    global player_cards
     player_cards = random.sample(deck,2)#player hand
     
     for card in player_cards:
