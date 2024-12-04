@@ -11,7 +11,9 @@ fullscreen = False
 
 window.title('Poker')
 
-card_types = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack','Queen', 'King']
+card_types = \
+    ['Ace', '2', '3', '4', '5', '6', '7', '8',
+     '9', '10', 'Jack', 'Queen', 'King']
 
 suits = ['hearts', 'diamonds', 'spades', 'clubs']
 deck = [f'{rank} of {suit}' for rank in card_types for suit in suits]
@@ -56,7 +58,6 @@ selected_theme = gold
 home_background = gold
 
 
-
 def welcome():       # welcome screen.
     global username
     clear_page()
@@ -81,16 +82,26 @@ def welcome():       # welcome screen.
     wallet_label = tk.Label(window, text=f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
 
-    quit_button = tk.Button(window, text = 'Quit',font = ('georgia',10),command=lambda:quit_game())
-    quit_button.pack(pady = 10)  
+    quit_button = tk.Button(window, text='Quit', font=('georgia', 10),
+                            command=lambda: quit_game())
+    quit_button.pack(pady=10)
+
     def quit_game():
         clear_page()
-        a_y_s_label = tk.Label(window,text = 'Are you sure you want to quit?\n 99% of gamblers quit before they win big', font = ('georgia',20))
+        a_y_s_label = tk.Label(window, text='Are you sure you want to quit?',
+                               font=('georgia', 20))
         a_y_s_label.pack()
-        yes_button = tk.Button(window,text = 'Yes Quit',font = ('georgia',15),command=lambda:yes_quit())
+        ninty_percent = tk.Label(window,
+                                 text='99% of gamblers quit before they win big',
+                                 font=('georgia', 20))
+        ninty_percent.pack()
+        yes_button = tk.Button(window, text='Yes Quit', font=('georgia', 15),
+                               command=lambda: yes_quit())
         yes_button.pack()
-        no_button = tk.Button(window,text = 'No',font = ('georgia',15),command=lambda:welcome())
+        no_button = tk.Button(window, text='No', font=('georgia', 15),
+                              command=lambda: welcome())
         no_button.pack()
+
         def yes_quit():
             window.destroy()
     window.bind('<Return>', lambda event: test_name(name=name_entry.get()))
@@ -100,16 +111,19 @@ def welcome():       # welcome screen.
 
 def test_name(name):  
     if len(name) == 0:
-        bad_username_label = tk.Label(window, text='Please enter a username between 1-10 character(s)',
+        bad_username_label = tk.Label(window,
+                                      text='Please enter a username between 1-10 character(s)',
                                       font=('georgia', 10))
         bad_username_label.pack(pady=15)
         window.after(2000, bad_username_label.destroy)
     elif len(name) > 10:
-        bad_username_label = tk.Label(window, text='Please enter a username between 1-10 character(s)', font=('georgia', 10))
+        bad_username_label = tk.Label(window, text='Please enter a username between 1-10 character(s)',
+                                      font=('georgia', 10))
         bad_username_label.pack(pady=15)
         window.after(2000, bad_username_label.destroy)
     elif name.count(' ') > 0:
-        no_space_username_label = tk.Label(window, text='Username must not contain spaces', font=('georgia', 10))
+        no_space_username_label = tk.Label(window, text='Username must not contain spaces',
+                                           font=('georgia', 10))
         no_space_username_label.pack(pady=15)
         window.after(2000, no_space_username_label.destroy)
     elif name == 'Ngo':
@@ -123,29 +137,36 @@ def test_name(name):
         roberson_label.pack(pady=20)
         window.after(2000, lambda: pre_bet(name))
     elif name == 'Cazalas':
-        cazalas_label = tk.Label(window, text = 'Welcome Dr. Cazalas', font = ('georgia',15))
+        cazalas_label = tk.Label(window, text='Welcome Dr. Cazalas', 
+                                 font=('georgia', 15))
         cazalas_label.pack()
-        window.after(2000, lambda:pre_bet(name))
+        window.after(2000, lambda: pre_bet(name))
     elif name == 'Eicholtz':
-        eicholtz_label = tk.Label(window, text = 'Welcome Dr. Eicholtz', font = ('georgia',15))
+        eicholtz_label = tk.Label(window, text='Welcome Dr. Eicholtz', 
+                                  font=('georgia', 15))
         eicholtz_label.pack()
-        window.after(2000, lambda:pre_bet(name))
+        window.after(2000, lambda: pre_bet(name))
     elif name == 'Burke':
-        burke_label = tk.Label(window, text = 'Welcome Dr. Burke ', font = ('georgia',15))
+        burke_label = tk.Label(window, text='Welcome Dr. Burke', 
+                               font=('georgia', 15))
         burke_label.pack()
-        window.after(2000, lambda:pre_bet(name))
+        window.after(2000, lambda: pre_bet(name))
     elif name == 'Canyon':
-        canyon_label = tk.Label(window,bg = 'forest green',fg='old lace', text = 'Welcome Canyon', font = ('georiga',15))
+        canyon_label = tk.Label(window, bg='forest green', fg='old lace',
+                                text='Welcome Canyon', font=('georiga', 15))
         canyon_label.pack()
-        window.after(2000, lambda:pre_bet(name))
+        window.after(2000, lambda: pre_bet(name))
     elif name == 'Mj':
-        mj_label = tk.Label(window, bg='red4', fg='white',text = 'Hola MJ', font = ('georgia',15))
+        mj_label = tk.Label(window, bg='red4', fg='white', text='Hola MJ', 
+                            font=('georgia', 15))
         mj_label.pack()
-        window.after(2000, lambda:pre_bet(name))
+        window.after(2000, lambda: pre_bet(name))
     elif name == 'Franko':
-        franko_label = tk.Label(window, bg = 'cyan2', fg='white', text = 'Hello Freaky Franko!', font = ('georiga',15))
+        franko_label = tk.Label(window, bg='cyan2', fg='white',
+                                text='Hello Freaky Franko!',
+                                font=('georgia', 15))
         franko_label.pack()
-        window.after(2000, lambda:pre_bet(name))
+        window.after(2000, lambda: pre_bet(name))
    
     else:
         window.after(1, lambda: pre_bet(name))
@@ -165,14 +186,15 @@ def blind():  # first deal
         global wallet
         global player_bet
         try:
-            bet_amount = int(bet,) #checks if bet can be made an int
-            if bet_amount > wallet: #bet more than you have
+            bet_amount = int(bet,)  # checks if bet can be made an int
+            if bet_amount > wallet:  # bet more than you have
                 not_enough_label = tk.Label(window, text=f'Not enough money. Max bet ${wallet}', font=('georgia', 10))
                 not_enough_label.pack(pady=10)
                 window.after(2000, not_enough_label.destroy)
             elif bet_amount < 1:
                 negitve_label = tk.Label(window, text='You must bet at least $1', font=('georgia', 10))
                 negitve_label.pack(pady=10)
+                window.after(2000, negitve_label.destroy)
             else:  # bet less than or equal to what you have
                 wallet -= bet_amount
                 player_bet += bet_amount
@@ -183,13 +205,13 @@ def blind():  # first deal
                 window.after(1000, lambda: next())
         except:  # bet was either a decimal or text
             error_label = tk.Label(window, text='Invalid number',
-                                   font=('georgia', 20))  
+                                   font=('georgia', 20)) 
             # bet cannot be made an int
             error_label.pack(pady=10)
             window.after(2000, error_label.destroy)
-    
+
     def flop():
-        #bet_enter_label.destroy()
+        # bet_enter_label.destroy()
         bet_amount_entry.destroy()
         bet_button.destroy()
         fold_button.destroy()
@@ -198,26 +220,28 @@ def blind():  # first deal
 
         for card in drawn_cards2:
             deck.remove(card)
-            image_file = card_images.get(card, None)
-            
+            image_file = card_images.get(card, None)         
             if image_file:
                 image = Image.open(image_file)
                 image = image.resize((60, 85))
                 card_photo = ImageTk.PhotoImage(image)
-                
+           
             image_label = tk.Label(com_frame, bg='black', image=card_photo)
-            image_label.image = card_photo  #reference to the image
-            image_label.pack(pady=10,side='left',padx=5)
+            image_label.image = card_photo  # reference to the image
+            image_label.pack(pady=10, side='left', padx=5)
 
-        bet_entry_flop = tk.Entry(window, font = ('georgia', 20))
+        bet_entry_flop = tk.Entry(window, font=('georgia', 20))
         bet_entry_flop.pack(pady=20)
-        bet_button_flop = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_flop.get(),next = turn))
+        bet_button_flop = tk.Button(window, text='BET!', font=('georgia', 20),
+                                    command=lambda: test_bet(bet_entry_flop.get(), next=turn))
         bet_button_flop.pack(pady=0)
-        fold_button_flop = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
+        fold_button_flop = tk.Button(window, text='Fold', font=('georgia', 15),
+                                     command=lambda: fold())
         fold_button_flop.pack(pady=0)
-        wallet_label_2 = tk.Label(window, text = f'Wallet: ${wallet}')
+        wallet_label_2 = tk.Label(window, text=f'Wallet: ${wallet}')
         wallet_label_2.pack(pady=0)
-        window.bind('<Return>', lambda event:test_bet(bet_entry_flop.get(),next = turn))
+        window.bind('<Return>', lambda event: test_bet(bet_entry_flop.get(),
+                                                       next=turn))
     
         def turn():
             bet_entry_flop.destroy()
@@ -237,34 +261,37 @@ def blind():  # first deal
                     card_photo = ImageTk.PhotoImage(image)
                     
                 image_label = tk.Label(com_frame, bg='black', image=card_photo)
-                image_label.image = card_photo  #reference to the image
-                image_label.pack(pady=10,side='left',padx=5)
+                image_label.image = card_photo  # reference to the image
+                image_label.pack(pady=10, side='left', padx=5)
 
-            bet_entry_turn = tk.Entry(window, font = ('georgia', 20))
+            bet_entry_turn = tk.Entry(window, font=('georgia', 20))
             bet_entry_turn.pack(pady=20)
-            bet_button_turn = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_entry_turn.get(),next = showdown))
+            bet_button_turn = tk.Button(window, text='BET!', font=('georgia', 20), 
+                                        command=lambda: test_bet(bet_entry_turn.get(),
+                                                                 next=showdown))
             bet_button_turn.pack(pady=0)
-            fold_button_turn = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
+            fold_button_turn = tk.Button(window, text='Fold', font=('georgia', 15),
+                                         command=lambda: fold())
             fold_button_turn.pack(pady=0)
-            wallet_label_3=tk.Label(window, text = f'Wallet: ${wallet}')
+            wallet_label_3 = tk.Label(window, text=f'Wallet: ${wallet}')
             wallet_label_3.pack(pady=0)
 
-
-            def showdown ():
+            def showdown():
                 bet_entry_turn.destroy()
                 bet_button_turn.destroy()
                 fold_button_turn.destroy()
                 wallet_label_3.destroy()
                 bet_enter_label.destroy()
 
-                comp_cards_label = tk.Label(comp_frame, text = 'Dealers Cards', font = ('georgia',20))
+                comp_cards_label = tk.Label(comp_frame, text='Dealers Cards', 
+                                            font=('georgia', 20))
                 comp_cards_label.pack()
                 global computer_cards
-                computer_cards = random.sample(deck,2)
+                computer_cards = random.sample(deck, 2)
     
-                for card in computer_cards: #computer cards-revealed at end of game to determine if you won or lost. 
+                for card in computer_cards:  # computer cards-revealed at end-determine if you won or lost.
                     deck.remove(card)
-                    image_file=card_images.get(card, None)
+                    image_file = card_images.get(card, None)
 
                     if image_file:
                         image = Image.open(image_file)
@@ -272,13 +299,17 @@ def blind():  # first deal
                         card_photo = ImageTk.PhotoImage(image)
 
                         image_label = tk.Label(comp_frame, bg='black',
-                                               image=card_photo) 
+                                               image=card_photo)
                         image_label.image = card_photo
-                        image_label.pack(pady=10,side='left',padx=5)
+                        image_label.pack(pady=10, side='left', padx=5)
 
-                pa_button=tk.Button(window, text = 'Play Again!', font = ('georgia',20),command=lambda:pre_bet(username))
+                pa_button = tk.Button(window, text='Play Again!',
+                                      font=('georgia', 20),
+                                      command=lambda: pre_bet(username))
                 pa_button.pack()
-                home_button_showdown = tk.Button(window,text = 'Home',font = ('georgia',10),command=lambda:welcome())
+                home_button_showdown = tk.Button(window, text='Home',
+                                                 font=('georgia', 10),
+                                                 command=lambda: welcome())
                 home_button_showdown.pack(pady=5)
 
                 def get_player_hand_details():
@@ -287,16 +318,15 @@ def blind():  # first deal
                     ranks_player = []
                     suits_player = []
                     for card in drawn_cards3:
-                        rank, suit = card.split( ' of ')
+                        rank, suit = card.split(' of ')
                         ranks_player.append(rank)
                         suits_player.append(suit)
                     for card in player_cards:
-                        rank, suit = card.split( ' of ')
+                        rank, suit = card.split(' of ')
                         ranks_player.append(rank)
                         suits_player.append(suit)
                     return ranks_player, suits_player
-                
-                
+              
                 def get_computer_hand_details():
                     global ranks_computer
                     global suits_computer
@@ -315,9 +345,12 @@ def blind():  # first deal
                 def evaluate_computer_hand():
                     get_computer_hand_details()   # This function extract the rank and suit and put them in lists to be checked for hands
                     global rank_values
-                    rank_values = {'2':2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,'8': 8, '9': 9, '10': 10, 'Jack': 11, 'Queen': 12, 'King': 13, 'Ace': 14}
+                    rank_values = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+                                   '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 11,
+                                   'Queen': 12, 'King': 13, 'Ace': 14}
                     global computer_rank_values
-                    computer_rank_values = [rank_values[rank] for rank in ranks_computer]
+                    computer_rank_values = \
+                        [rank_values[rank] for rank in ranks_computer]
                     # These lines assigns an integer value to the string value of rank to allow the code to detect straights
                     
                     straight()
@@ -349,20 +382,20 @@ def blind():  # first deal
                         return 'high_card'
                 
                 def straight():
-                    sorted_values = sorted(computer_rank_values)
-                    for i in range(len(sorted_values)):
-                        if (sorted_values[i] == sorted_values[i - 1]):
-                            return True
-                        else:
+                    sorted_values = sorted(player_rank_values)
+                    for i in range(1, len(sorted_values)):
+                        if sorted_values[i] != sorted_values[i - 1] + 1:
                             return False
+                    else:
+                        return True
                 
                 def flush():
-                    first_suit = suits_computer[0]
-                    for i in suits_computer:
-                        if i != first_suit:
-                            return True
-                        else:
+                    first_suit = suits_player[0]
+                    for suit in suits_player:
+                        if suit != first_suit:
                             return False
+                    else:
+                        return True
                 
                 def four_of_kind():
                     rank_counter = Counter(computer_rank_values)
@@ -375,33 +408,44 @@ def blind():  # first deal
                     rank_counter = Counter(computer_rank_values)
                     if 3 in rank_counter.values() and 2 in rank_counter.values():
                         return True
+                    else:
+                        return False
                 
                 def three_of_kind():
                     rank_counter = Counter(computer_rank_values)        
                     if 3 in rank_counter.values():
-                        return True    
+                        return True  
+                    else:
+                        return False  
                     
                 def two_pair():
                     rank_counter = Counter(computer_rank_values)
-                    pair_counts =list(rank_counter.values())
+                    pair_counts = list(rank_counter.values())
                     if pair_counts.count(2) >= 2:
-                        return True        
+                        return True 
+                    else:
+                        return False   
                 
                 def pair():
                     rank_counter = Counter(computer_rank_values)
                     if 2 in rank_counter.values():
                         return True
+                    else:
+                        return False
                             
                 def high_card():
                     return max(computer_rank_values)        
                 
-                
                 def evaluate_player_hand():
                     get_player_hand_details()   
                     
-                    rank_values = {'2':2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,'8': 8, '9': 9, '10': 10, 'Jack': 11, 'Queen': 12, 'King': 13, 'Ace': 14}
+                    rank_values = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+                                   '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 11, 
+                                   'Queen': 12, 'King': 13, 'Ace': 14}
+                                   
                     global player_rank_values
-                    player_rank_values = [rank_values[rank] for rank in ranks_player]
+                    player_rank_values = \
+                        [rank_values[rank] for rank in ranks_player]
                     
                     straight()
                     flush()
@@ -436,14 +480,16 @@ def blind():  # first deal
                     for i in range(1, len(sorted_values)):
                         if sorted_values[i] != sorted_values[i - 1] + 1:
                             return False
-                    return True
+                    else:
+                        return True
                 
                 def flush():
                     first_suit = suits_player[0]
                     for suit in suits_player:
                         if suit != first_suit:
                             return False
-                    return True
+                    else:
+                        return True
                 
                 def four_of_kind():
                     rank_counter = Counter(player_rank_values)
@@ -489,41 +535,62 @@ def blind():  # first deal
                 
                 player_hand_value = poker_hands_dict[player_hand_final]
                 computer_hand_value = poker_hands_dict[computer_hand_final]
+
                 def player_wins():
                     clear_page()
-                    player_wins_label = tk.Label (window,bg = 'blue', text = 'You Wins', font = ('georgia',20))
+                    player_wins_label = tk.Label(window, bg='blue', text='You Wins',
+                                                 font=('georgia', 20))
                     player_wins_label.pack()
-                    amount_won_label = tk.Label(window, text = f'Won ${player_bet*2}!',font = ('georgia',15))
+                    amount_won_label = tk.Label(window, text=f'Won ${player_bet*2}!',
+                                                font=('georgia', 15))
                     amount_won_label.pack()
+                    global wallet
                     wallet = wallet + (player_bet*2)
+
                 def computer_wins():
                     clear_page()
-                    computer_wins_label = tk.Label (window,bg='red', text = 'Computer Wins!', font = ('gorgia',20))
+                    computer_wins_label = tk.Label(window, bg='red',
+                                                   text='Computer Wins!',
+                                                   font=('gorgia', 20))
                     computer_wins_label.pack()
-                    amount_lost_label=tk.Label(window, text = f'Lost {player_bet}',font = ('georgia',15))
+                    amount_lost_label = tk.Label(window,
+                                                 text=f'Lost {player_bet}',
+                                                 font=('georgia', 15))
                     amount_lost_label.pack()
                     
                 def compare_high_cards():
                     global wallet
                     global player_bet
-                    player_value_ranks = sorted([rank_values[rank] for rank in ranks_player], reverse = True)
+                    player_value_ranks = \
+                        sorted([rank_values[rank] for rank in ranks_player], reverse=True)
                     computer_numeric_ranks = sorted([rank_values[rank] for rank in ranks_computer], reverse=True)
-                    for player_rank, computer_rank in zip(player_value_ranks, computer_numeric_ranks):
+                    for player_rank, computer_rank in zip(player_value_ranks,
+                                                          computer_numeric_ranks):
                         if player_rank > computer_rank:
-                            player_high_card = tk.Label (window, bg = 'blue',text = "You Win!", font = ("georgia", 20))
+                            player_high_card = tk.Label(window, bg='blue',
+                                                        text="You Win!",
+                                                        font=("georgia", 20))
                             player_high_card.pack()
-                            amount_won_label_chc = tk.Label(window, text = f'Won ${player_bet*2}!',font = ('georgia',15))
+                            amount_won_label_chc = tk.Label(window, 
+                                                            text=f'Won ${player_bet*2}!',
+                                                            font=('georgia', 15))
                             amount_won_label_chc.pack()
                             wallet = wallet + (player_bet*2)
                             return
                         elif computer_rank > player_rank:
-                            computer_high_card = tk.Label (window,bg='red',text = "Computer Wins!", font = ("georgia", 20))
+                            computer_high_card = tk.Label(window, bg='red',
+                                                          text="Computer Wins!",
+                                                          font=("georgia", 20))
                             computer_high_card.pack()
-                            amount_lost_label_chc=tk.Label(window, text = f'Lost {player_bet}',font = ('georgia',15))
+                            amount_lost_label_chc = tk.Label(window,
+                                                             text=f'Lost {player_bet}',
+                                                             font=('georgia', 15))
                             amount_lost_label_chc.pack()
                             return
                         
-                    tie_label = tk.Label (window, text = "It's a high card tie!", font =("georgia", 20))
+                    tie_label = tk.Label(window,
+                                         text="It's a high card tie!",
+                                         font=("georgia", 20))
                     tie_label.pack()
                         
                 if player_hand_value > computer_hand_value:
@@ -533,25 +600,22 @@ def blind():  # first deal
                 else:
                     compare_high_cards()
 
+    clear_page()
 
-                
-
-
-    clear_page() 
-
-    com_cards_label = tk.Label(window, text = 'Community Cards',font = ('georgia',15))
+    com_cards_label = tk.Label(window, text='Community Cards', 
+                               font=('georgia', 15))
 
     com_cards_label.pack(pady=5)
     
     drawn_cards = random.sample(deck, 1)
 
-    com_frame = tk.Frame(window) #com cards
+    com_frame = tk.Frame(window)  # com cards
     com_frame.pack(side='top', pady=10)
 
-    hand_label = tk.Label(window, text = 'Your Hand',font = ('georgia',20))
+    hand_label = tk.Label(window, text='Your Hand', font=('georgia', 20))
     hand_label.pack()
 
-    hand_frame=tk.Frame(window) #your hand frame
+    hand_frame = tk.Frame(window)  # your hand frame
     hand_frame.pack(pady=10)
 
     for card in drawn_cards:
@@ -563,53 +627,55 @@ def blind():  # first deal
             image = image.resize((60, 85))
             card_photo = ImageTk.PhotoImage(image)
             
-            image_label = tk.Label(com_frame,bg='black', image=card_photo)
-            image_label.image = card_photo 
-            image_label.pack(pady=10,side='left',padx=5)
+            image_label = tk.Label(com_frame, bg='black', image=card_photo)
+            image_label.image = card_photo
+            image_label.pack(pady=10, side='left', padx=5)
     
     global player_cards
-    player_cards = random.sample(deck,2)#player hand
+    player_cards = random.sample(deck, 2)  # player hand
     
     for card in player_cards:
         deck.remove(card)
-        image_file=card_images.get(card, None)
+        image_file = card_images.get(card, None)
 
         if image_file:
             image = Image.open(image_file)
             image = image.resize((60, 85))
             card_photo = ImageTk.PhotoImage(image)
             
-            image_label = tk.Label(hand_frame,bg='black', image=card_photo)
-            image_label.image = card_photo  #reference to the image, keeps it from being trashed
-            image_label.pack(pady=10,side='left',padx=5)
+            image_label = tk.Label(hand_frame, bg='black', image=card_photo)
+            image_label.image = card_photo  # reference to the image, keeps it from being trashed
+            image_label.pack(pady=10, side='left', padx=5)
 
-
-    bet_enter_label = tk.Label(window, text = 'enter bet', font = ('georgia', 20))
-    bet_enter_label.pack(pady = 20)
-    bet_amount_entry = tk.Entry(window, font = ('georgia', 20))
+    bet_enter_label = tk.Label(window, text='enter bet', font=('georgia', 20))
+    bet_enter_label.pack(pady=20)
+    bet_amount_entry = tk.Entry(window, font=('georgia', 20))
     bet_amount_entry.pack(pady=20)
-    bet_button = tk.Button(window, text = 'BET!', font = ('georgia', 20), command=lambda:test_bet(bet_amount_entry.get(),next = flop))
+    bet_button = tk.Button(window, text='BET!', font=('georgia', 20),
+                           command=lambda: test_bet(bet_amount_entry.get(),
+                                                    next=flop))
     bet_button.pack(pady=0)
-    fold_button = tk.Button(window, text = 'Fold', font = ('georgia', 15),command=lambda:fold())
+    fold_button = tk.Button(window, text='Fold', font=('georgia', 15),
+                            command=lambda: fold())
     fold_button.pack(pady=0)
-    wallet_label = tk.Label(window, text = f'Wallet: ${wallet}')
+    wallet_label = tk.Label(window, text=f'Wallet: ${wallet}')
     wallet_label.pack(pady=0)
 
-    comp_frame=tk.Frame(window) #computers hand
+    comp_frame = tk.Frame(window)  # computers hand
     comp_frame.pack(pady=10)
 
 
-def fold (): #if player folds
-    wallet_fold_label = tk.Label(window, text = f'${wallet} remaining', font = ('georgia', 10))
+def fold():  # if player folds
+    wallet_fold_label = tk.Label(window, text=f'${wallet} remaining',
+                                 font=('georgia', 10))
     wallet_fold_label.pack(pady=20)
-    folding_label=tk.Label(window, text = 'Folding', font = ('georgia', 10))
+    folding_label = tk.Label(window, text='Folding', font=('georgia', 10))
     folding_label.pack(pady=20)
-    window.after(2,lambda:clear_page())
-    window.after(1000, lambda:pre_bet(username))
+    window.after(2, lambda: clear_page())
+    window.after(1000, lambda: pre_bet(username))
 
 
-
-def pre_bet (name): #before you bet after welcome function.
+def pre_bet(name):  # before you bet after welcome function.
     global username
     global wallet
     global player_bet
@@ -619,58 +685,61 @@ def pre_bet (name): #before you bet after welcome function.
     image = Image.open(selected_theme) 
     resized_image = image.resize((1920, 1080), Image.LANCZOS)
     bg_image = ImageTk.PhotoImage(resized_image)
-    window.bg_image = bg_image  #Stores the image as a part of the window
+    window.bg_image = bg_image   # Stores the image as a part of the window
     bg_label = tk.Label(window, image=bg_image)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
     clear_page()
-    name_label = tk.Label(window, text = f'welcome {username}', font = ('georgia', 30))
+    name_label = tk.Label(window, text=f'welcome {username}', 
+                          font=('georgia', 30))
     name_label.pack(pady=20)
-    deal_button = tk.Button(window, text = 'DEAL!', font = ('georgia', 20), command=lambda:blind())
+    deal_button = tk.Button(window, text='DEAL!', font=('georgia', 20),
+                            command=lambda: blind())
     deal_button.pack(pady=20)
-    back_button = tk.Button(window, text = 'Back', font = ('georgia', 10),command=lambda:welcome())
-    back_button.pack(pady = 20)
-    window.bind('<Escape>',lambda event:welcome())
-    window.bind('<Return>',lambda event:blind())
-
+    back_button = tk.Button(window, text='Back', font=('georgia', 10),
+                            command=lambda: welcome())
+    back_button.pack(pady=20)
+    window.bind('<Escape>', lambda event: welcome())
+    window.bind('<Return>', lambda event: blind())
 
 
 def settings():
     clear_page()
-    
+  
     def fullscreen_control():  # enables / disables fullscreen
         global fullscreen
-        fullscreen = not fullscreen #change in and out of full screen
-        window.attributes("-fullscreen", fullscreen)  #make full screen
+        fullscreen = not fullscreen  # change in and out of full screen
+        window.attributes("-fullscreen", fullscreen)  # make full screen
         if fullscreen:
             full_screen_button.config(text="Full Screen: ON")
         else:
             full_screen_button.config(text="Full Screen: OFF")
         welcome()
-    
+
     settings_label = tk.Label(window, text='Settings', font=('Georgia', 20))
     settings_label.pack(pady=20)
-    
+
     background_button = tk.Button(window, text='Change Background', font=('Georgia', 20), command=background_menu)
     background_button.pack(pady=10)
 
-    full_screen_button = tk.Button(window, text = 'Full Screen: OFF',font = ('georiga',20),command=lambda:fullscreen_control())
+    full_screen_button = tk.Button(window, text='Full Screen: OFF', font=('georiga', 20), command=lambda: fullscreen_control())
     full_screen_button.pack(pady=10)
 
-    credits_button = tk.Button(window, text = "Credits And Attributions", font = ('georgia',20),command=lambda:credits())
+    credits_button = tk.Button(window, text="Credits And Attributions", font=('georgia', 20), command=lambda: credits())
     credits_button.pack(pady=10)
 
-    back_button = tk.Button(window, text = 'Back',font = ('georgia', 10), command=lambda: welcome())
+    back_button = tk.Button(window, text='Back', font=('georgia', 10), command=lambda: welcome())
     back_button.pack()
+
 
 def credits ():
     clear_page()
-    Credits_label = tk.Label(window, text = "Credits And Attributions", font = ('georgia',20))
-    Credits_label.pack(pady = 20)
-    devs_label = tk.Label(window, text = 'Developers',font = ('georgia',15))
+    Credits_label = tk.Label(window, text="Credits And Attributions", font=('georgia', 20))
+    Credits_label.pack(pady=20)
+    devs_label = tk.Label(window, text='Developers', font=('georgia', 15))
     devs_label.pack(pady=5)
-    team_label = tk.Label(window, text = 'Canyon Lowes\nMJ rodriguez\nFranko Suarez')
-    team_label.pack(pady = 5)
-    back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:settings())
+    team_label = tk.Label(window, text='Canyon Lowes\nMJ rodriguez\nFranko Suarez')
+    team_label.pack(pady=5)
+    back_button = tk.Button(window, text='Back', font=('georgia', 10), command=lambda: settings())
     back_button.pack()
 
 
@@ -678,7 +747,7 @@ def background_menu():
     clear_page()
     new_background_label = tk.Label(window, text='Choose Background', font=('Georgia', 20))
     new_background_label.pack(pady=20)
-    color_button = tk.Button(window, text = 'Colors', font = ('georgia', 20),command=lambda:colors())
+    color_button = tk.Button(window, text='Colors', font = ('georgia', 20),command=lambda:colors())
     color_button.pack(pady = 20)
     other_button = tk.Button(window, text = 'Other', font = ('georgia', 20),command=lambda:other_bg())
     other_button.pack(pady = 20)
