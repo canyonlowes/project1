@@ -46,10 +46,10 @@ gold = "gold1.jpg"
 cat_home = "cat1.jpg"
 cat_game_background = "cat2.jpg"
 christmas_home = "christmasbg4.jpg"
-christmas_game_background = "christmasbg1.jpg"
+xmas_game_bg = "christmasbg1.jpg"
 purple = "purple.jpg"
 black = "black1.jpg"
-old_fashioned_game = "guns1.jpg"
+old_f_game = "guns1.jpg"
 old_fashioned_home = "brown1.jpg"
 red = "red1.jpg"
 neon_game = "neon2.jpg"
@@ -104,7 +104,6 @@ def welcome():       # welcome screen.
 
         def yes_quit():
             window.destroy()
-    window.bind('<Return>', lambda event: test_name(name=name_entry.get()))
 
 # checks if name is valid(name must be betweein 1 and 10 letters and no spaces)
 
@@ -170,7 +169,6 @@ def test_name(name):
    
     else:
         window.after(1, lambda: pre_bet(name))
-    window.bind('<Escape>', lambda event: window.destroy())
 
 
 def clear_page():  # clears page when called. (Time saver)
@@ -240,9 +238,7 @@ def blind():  # first deal
         fold_button_flop.pack(pady=0)
         wallet_label_2 = tk.Label(window, text=f'Wallet: ${wallet}')
         wallet_label_2.pack(pady=0)
-        window.bind('<Return>', lambda event: test_bet(bet_entry_flop.get(),
-                                                       next=turn))
-    
+
         def turn():
             bet_entry_flop.destroy()
             bet_button_flop.destroy()
@@ -602,7 +598,7 @@ def blind():  # first deal
 
     clear_page()
 
-    com_cards_label = tk.Label(window, text='Community Cards', 
+    com_cards_label = tk.Label(window, text='Community Cards',
                                font=('georgia', 15))
 
     com_cards_label.pack(pady=5)
@@ -698,8 +694,6 @@ def pre_bet(name):  # before you bet after welcome function.
     back_button = tk.Button(window, text='Back', font=('georgia', 10),
                             command=lambda: welcome())
     back_button.pack(pady=20)
-    window.bind('<Escape>', lambda event: welcome())
-    window.bind('<Return>', lambda event: blind())
 
 
 def settings():
@@ -715,10 +709,10 @@ def settings():
             full_screen_button.config(text="Full Screen: OFF")
         welcome()
 
-    settings_label = tk.Label(window, text='Settings', font=('Georgia', 20))
+    settings_label = tk.Label(window, text='Settings', font=('georgia', 20))
     settings_label.pack(pady=20)
 
-    background_button = tk.Button(window, text='Change Background', font=('Georgia', 20), command=background_menu)
+    background_button = tk.Button(window, text='Change Background', font=('georgia', 20), command=background_menu)
     background_button.pack(pady=10)
 
     full_screen_button = tk.Button(window, text='Full Screen: OFF', font=('georiga', 20), command=lambda: fullscreen_control())
@@ -731,15 +725,18 @@ def settings():
     back_button.pack()
 
 
-def credits ():
+def credits():
     clear_page()
-    Credits_label = tk.Label(window, text="Credits And Attributions", font=('georgia', 20))
+    Credits_label = tk.Label(window, text="Credits And Attributions", 
+                             font=('georgia', 20))
     Credits_label.pack(pady=20)
     devs_label = tk.Label(window, text='Developers', font=('georgia', 15))
     devs_label.pack(pady=5)
-    team_label = tk.Label(window, text='Canyon Lowes\nMJ rodriguez\nFranko Suarez')
+    team_label = tk.Label(window, 
+                          text='Canyon Lowes\nMJ rodriguez\nFranko Suarez')
     team_label.pack(pady=5)
-    back_button = tk.Button(window, text='Back', font=('georgia', 10), command=lambda: settings())
+    back_button = tk.Button(window, text='Back', font=('georgia', 10), 
+                            command=lambda: settings())
     back_button.pack()
 
 
@@ -747,67 +744,82 @@ def background_menu():
     clear_page()
     new_background_label = tk.Label(window, text='Choose Background', font=('Georgia', 20))
     new_background_label.pack(pady=20)
-    color_button = tk.Button(window, text='Colors', font = ('georgia', 20),command=lambda:colors())
-    color_button.pack(pady = 20)
-    other_button = tk.Button(window, text = 'Other', font = ('georgia', 20),command=lambda:other_bg())
-    other_button.pack(pady = 20)
-    back_button = tk.Button(window, text = 'Back',font = ('georgia', 10),command=lambda:settings())
+    color_button = tk.Button(window, text='Colors', font=('georgia', 20), 
+                             command=lambda: colors())
+    color_button.pack(pady=20)
+    other_button = tk.Button(window, text='Other', font=('georgia', 20), 
+                             command=lambda: other_bg())
+    other_button.pack(pady=20)
+    back_button = tk.Button(window, text='Back', font=('georgia', 10), 
+                            command=lambda: settings())
     back_button.pack()
     
     def colors():
         clear_page()  
 
-        green_button = tk.Button(window, text=' Green', font=('Georgia', 20), bg='SpringGreen2', command=lambda: commit_theme(green))
+        green_button = tk.Button(window, text=' Green', font=('Georgia', 20), 
+                                 bg='SpringGreen2', command=lambda: commit_theme(green))
         green_button.pack(pady=0)
     
-        gold_button = tk.Button(window, text=' Gold  ', font=('Georgia', 20), bg='gold', command=lambda: commit_theme(gold))
+        gold_button = tk.Button(window, text=' Gold  ', font=('Georgia', 20), 
+                                bg='gold', command=lambda: commit_theme(gold))
         gold_button.pack(pady=0)
 
         purple_button = tk.Button(window, text='Purple', font=('Georgia', 20), bg='dark orchid', command=lambda: commit_theme(purple))
         purple_button.pack(pady=0)
 
-        black_button = tk.Button(window, text = ' Black ', font = ('georgia', 20), bg='gray1', fg='gray100', command=lambda:commit_theme(black))
+        black_button = tk.Button(window, text=' Black ',
+                                 font=('georgia', 20), bg='gray1', fg='gray100', command=lambda: commit_theme(black))
         black_button.pack(pady=0)
 
-        red_button = tk.Button(window, text = ' Red ', font = ('georgia', 25), bg='red', command=lambda:commit_theme(red))
+        red_button = tk.Button(window, text=' Red ', font=('georgia', 25), bg='red', command=lambda: commit_theme(red))
         red_button.pack(pady=0)
 
-        back_button = tk.Button(window, text = 'Back',font = ('georgia', 10), command=lambda:background_menu())
-        back_button.pack(pady = 50)
+        back_button = tk.Button(window, text='Back', font=('georgia', 10), command=lambda: background_menu())
+        back_button.pack(padyv=50)
     
-    def other_bg ():#themes that are more than colors
+    def other_bg():  # themes that are more than colors
         clear_page()
 
-        cat_button = tk.Button(window,bg = 'DarkGoldenrod1',fg='Black', text = ' Cats  ', font = ('georgia', 20),command=lambda:commit_theme(cat_game_background))
-        cat_button.pack(pady = 0)
+        cat_button = tk.Button(window, bg='DarkGoldenrod1', fg='Black',
+                               text=' Cats  ', font=('georgia', 20),
+                               command=lambda: commit_theme(cat_game_background))
+        cat_button.pack(pady=0)
 
-        christmas_button = tk.Button(window,bg='green2',fg ='red2',text= 'Christmas', font = ('georgia', 20),command=lambda:commit_theme(christmas_game_background))
-        christmas_button.pack(pady = 0)
+        christmas_button = tk.Button(window, bg='green2', fg='red2',
+                                     text='Christmas', font=('georgia', 20),
+                                     command=lambda: commit_theme(xmas_game_bg))
+        christmas_button.pack(pady=0)
 
-        old_fashioned_button = tk.Button(window, bg = 'bisque2', fg = 'black',text = 'Old Fashioned', font = ('georgia', 20),command=lambda:commit_theme(old_fashioned_game))
-        old_fashioned_button.pack(pady = 0)
+        old_fashioned_button = tk.Button(window, bg='bisque2', fg='black',
+                                         text='Old Fashioned', font=('georgia', 20),
+                                         command=lambda: commit_theme(old_f_game))
+        old_fashioned_button.pack(pady=0)
 
-        neon_button = tk.Button(window, bg = 'DarkOrchid2',fg = 'deep sky blue', text = 'Neon', font = ('Georgia',20),command=lambda:commit_theme(neon_game))
+        neon_button = tk.Button(window, bg='DarkOrchid2', fg='deep sky blue',
+                                text='Neon', font=('Georgia', 20), 
+                                command=lambda: commit_theme(neon_game))
         neon_button.pack(pady=0)
+
 
 def commit_theme(theme):
     global selected_theme
     global home_background
     selected_theme = theme 
     if selected_theme == cat_game_background:
-        home_background=cat_home
+        home_background = cat_home
         welcome()
-    elif selected_theme == christmas_game_background:
-        home_background=christmas_home
+    elif selected_theme == xmas_game_bg:
+        home_background = christmas_home
         welcome()
-    elif selected_theme == old_fashioned_game:
-        home_background=old_fashioned_home
+    elif selected_theme == old_f_game:
+        home_background = old_fashioned_home
         welcome()
     elif selected_theme == neon_game:
-        home_background=neon_game
+        home_background = neon_game
         welcome()
     else:
-        home_background=theme
+        home_background = theme
         welcome()
 
 
