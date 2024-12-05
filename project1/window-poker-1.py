@@ -73,7 +73,7 @@ def welcome():       # welcome screen.
     welcome_label.pack(pady=20)
     name_entry = tk.Entry(window, font=("georgia", 20))
     name_entry.pack(pady=20)
-    play_button = tk.Button(window, text="Play!", font=("georgia", 20), 
+    play_button = tk.Button(window, text="Play!", font=("georgia", 20),
                             command=lambda: test_name(name=name_entry.get()))
     play_button.pack(pady=20)
     settings_button = tk.Button(window, text='Settings', font=('georgia', 20),
@@ -121,7 +121,8 @@ def test_name(name):
         bad_username_label.pack(pady=15)
         window.after(2000, bad_username_label.destroy)
     elif name.count(' ') > 0:
-        no_space_username_label = tk.Label(window, text='Username must not contain spaces',
+        no_space_username_label = tk.Label(window,
+                                           text='Username must not contain spaces',
                                            font=('georgia', 10))
         no_space_username_label.pack(pady=15)
         window.after(2000, no_space_username_label.destroy)
@@ -136,17 +137,17 @@ def test_name(name):
         roberson_label.pack(pady=20)
         window.after(2000, lambda: pre_bet(name))
     elif name == 'Cazalas':
-        cazalas_label = tk.Label(window, text='Welcome Dr. Cazalas', 
+        cazalas_label = tk.Label(window, text='Welcome Dr. Cazalas',
                                  font=('georgia', 15))
         cazalas_label.pack()
         window.after(2000, lambda: pre_bet(name))
     elif name == 'Eicholtz':
-        eicholtz_label = tk.Label(window, text='Welcome Dr. Eicholtz', 
+        eicholtz_label = tk.Label(window, text='Welcome Dr. Eicholtz',
                                   font=('georgia', 15))
         eicholtz_label.pack()
         window.after(2000, lambda: pre_bet(name))
     elif name == 'Burke':
-        burke_label = tk.Label(window, text='Welcome Dr. Burke', 
+        burke_label = tk.Label(window, text='Welcome Dr. Burke',
                                font=('georgia', 15))
         burke_label.pack()
         window.after(2000, lambda: pre_bet(name))
@@ -156,7 +157,7 @@ def test_name(name):
         canyon_label.pack()
         window.after(2000, lambda: pre_bet(name))
     elif name == 'Mj':
-        mj_label = tk.Label(window, bg='red4', fg='white', text='Hola MJ', 
+        mj_label = tk.Label(window, bg='red4', fg='white', text='Hola MJ',
                             font=('georgia', 15))
         mj_label.pack()
         window.after(2000, lambda: pre_bet(name))
@@ -180,7 +181,7 @@ def blind():  # first deal
     global wallet
     global player_bet
 
-    def test_bet(bet, next):  # checks if your bet is allowed (<= wallet and int)
+    def test_bet(bet, next):  # checks if your bet is allowed
         global wallet
         global player_bet
         try:
@@ -196,7 +197,8 @@ def blind():  # first deal
             else:  # bet less than or equal to what you have
                 wallet -= bet_amount
                 player_bet += bet_amount
-                total_betting_label = tk.Label(window, text=f'Betting ${bet_amount}. ${wallet} remaining',
+                total_betting_label = tk.Label(window, 
+                                               text=f'Betting ${bet_amount}. ${wallet} remaining',
                                                font=('georgia', 10))
                 total_betting_label.pack(pady=10)
                 window.after(1000, total_betting_label.destroy)
@@ -231,7 +233,8 @@ def blind():  # first deal
         bet_entry_flop = tk.Entry(window, font=('georgia', 20))
         bet_entry_flop.pack(pady=20)
         bet_button_flop = tk.Button(window, text='BET!', font=('georgia', 20),
-                                    command=lambda: test_bet(bet_entry_flop.get(), next=turn))
+                                    command=lambda: test_bet
+                                    (bet_entry_flop.get(), next=turn))
         bet_button_flop.pack(pady=0)
         fold_button_flop = tk.Button(window, text='Fold', font=('georgia', 15),
                                      command=lambda: fold())
@@ -262,11 +265,14 @@ def blind():  # first deal
 
             bet_entry_turn = tk.Entry(window, font=('georgia', 20))
             bet_entry_turn.pack(pady=20)
-            bet_button_turn = tk.Button(window, text='BET!', font=('georgia', 20), 
-                                        command=lambda: test_bet(bet_entry_turn.get(),
-                                                                 next=showdown))
+            bet_button_turn = tk.Button(window, text='BET!',
+                                        font=('georgia', 20),
+                                        command=lambda: test_bet
+                                        (bet_entry_turn.get(),
+                                            next=showdown))
             bet_button_turn.pack(pady=0)
-            fold_button_turn = tk.Button(window, text='Fold', font=('georgia', 15),
+            fold_button_turn = tk.Button(window, text='Fold', 
+                                         font=('georgia', 15),
                                          command=lambda: fold())
             fold_button_turn.pack(pady=0)
             wallet_label_3 = tk.Label(window, text=f'Wallet: ${wallet}')
@@ -285,7 +291,7 @@ def blind():  # first deal
                 global computer_cards
                 computer_cards = random.sample(deck, 2)
     
-                for card in computer_cards:  # computer cards-revealed at end-determine if you won or lost.
+                for card in computer_cards:  # computer cards
                     deck.remove(card)
                     image_file = card_images.get(card, None)
 
@@ -509,7 +515,7 @@ def blind():  # first deal
                     
                 def two_pair():
                     rank_counter = Counter(player_rank_values)
-                    pair_counts =list(rank_counter.values())
+                    pair_counts = list(rank_counter.values())
                     if pair_counts.count(2) >= 2:
                         return True 
                     return False
@@ -534,10 +540,12 @@ def blind():  # first deal
 
                 def player_wins():
                     clear_page()
-                    player_wins_label = tk.Label(window, bg='blue', text='You Wins',
+                    player_wins_label = tk.Label(window, bg='blue',
+                                                 text='You Wins',
                                                  font=('georgia', 20))
                     player_wins_label.pack()
-                    amount_won_label = tk.Label(window, text=f'Won ${player_bet*2}!',
+                    amount_won_label = tk.Label(window,
+                                                text=f'Won ${player_bet*2}!',
                                                 font=('georgia', 15))
                     amount_won_label.pack()
                     global wallet
@@ -558,8 +566,10 @@ def blind():  # first deal
                     global wallet
                     global player_bet
                     player_value_ranks = \
-                        sorted([rank_values[rank] for rank in ranks_player], reverse=True)
-                    computer_numeric_ranks = sorted([rank_values[rank] for rank in ranks_computer], reverse=True)
+                        sorted([rank_values[rank] for rank in ranks_player],
+                               reverse=True)
+                    computer_numeric_ranks = sorted([rank_values[rank] for
+                                                     rank in ranks_computer], reverse=True)
                     for player_rank, computer_rank in zip(player_value_ranks,
                                                           computer_numeric_ranks):
                         if player_rank > computer_rank:
@@ -583,12 +593,10 @@ def blind():  # first deal
                                                              font=('georgia', 15))
                             amount_lost_label_chc.pack()
                             return
-                        
                     tie_label = tk.Label(window,
                                          text="It's a high card tie!",
                                          font=("georgia", 20))
                     tie_label.pack()
-                        
                 if player_hand_value > computer_hand_value:
                     player_wins()
                 elif computer_hand_value > player_hand_value:
@@ -602,7 +610,6 @@ def blind():  # first deal
                                font=('georgia', 15))
 
     com_cards_label.pack(pady=5)
-    
     drawn_cards = random.sample(deck, 1)
 
     com_frame = tk.Frame(window)  # com cards
@@ -617,19 +624,19 @@ def blind():  # first deal
     for card in drawn_cards:
         deck.remove(card)
         image_file = card_images.get(card, None)
-        
+
         if image_file:
             image = Image.open(image_file)
             image = image.resize((60, 85))
             card_photo = ImageTk.PhotoImage(image)
-            
+
             image_label = tk.Label(com_frame, bg='black', image=card_photo)
             image_label.image = card_photo
             image_label.pack(pady=10, side='left', padx=5)
-    
+
     global player_cards
     player_cards = random.sample(deck, 2)  # player hand
-    
+
     for card in player_cards:
         deck.remove(card)
         image_file = card_images.get(card, None)
@@ -638,7 +645,7 @@ def blind():  # first deal
             image = Image.open(image_file)
             image = image.resize((60, 85))
             card_photo = ImageTk.PhotoImage(image)
-            
+
             image_label = tk.Label(hand_frame, bg='black', image=card_photo)
             image_label.image = card_photo  # reference to the image, keeps it from being trashed
             image_label.pack(pady=10, side='left', padx=5)
@@ -712,16 +719,22 @@ def settings():
     settings_label = tk.Label(window, text='Settings', font=('georgia', 20))
     settings_label.pack(pady=20)
 
-    background_button = tk.Button(window, text='Change Background', font=('georgia', 20), command=background_menu)
+    background_button = tk.Button(window, text='Change Background',
+                                  font=('georgia', 20),
+                                  command=background_menu)
     background_button.pack(pady=10)
 
-    full_screen_button = tk.Button(window, text='Full Screen: OFF', font=('georiga', 20), command=lambda: fullscreen_control())
+    full_screen_button = tk.Button(window, text='Full Screen: OFF',
+                                   font=('georiga', 20),
+                                   command=lambda: fullscreen_control())
     full_screen_button.pack(pady=10)
 
-    credits_button = tk.Button(window, text="Credits And Attributions", font=('georgia', 20), command=lambda: credits())
+    credits_button = tk.Button(window, text="Credits And Attributions",
+                               font=('georgia', 20), command=lambda: credits())
     credits_button.pack(pady=10)
 
-    back_button = tk.Button(window, text='Back', font=('georgia', 10), command=lambda: welcome())
+    back_button = tk.Button(window, text='Back', font=('georgia', 10),
+                            command=lambda: welcome())
     back_button.pack()
 
 
@@ -735,69 +748,79 @@ def credits():
     team_label = tk.Label(window, 
                           text='Canyon Lowes\nMJ rodriguez\nFranko Suarez')
     team_label.pack(pady=5)
-    back_button = tk.Button(window, text='Back', font=('georgia', 10), 
+    back_button = tk.Button(window, text='Back', font=('georgia', 10),
                             command=lambda: settings())
     back_button.pack()
 
 
 def background_menu():
     clear_page()
-    new_background_label = tk.Label(window, text='Choose Background', font=('Georgia', 20))
+    new_background_label = tk.Label(window, text='Choose Background',
+                                    font=('Georgia', 20))
     new_background_label.pack(pady=20)
-    color_button = tk.Button(window, text='Colors', font=('georgia', 20), 
+    color_button = tk.Button(window, text='Colors', font=('georgia', 20),
                              command=lambda: colors())
     color_button.pack(pady=20)
-    other_button = tk.Button(window, text='Other', font=('georgia', 20), 
+    other_button = tk.Button(window, text='Other', font=('georgia', 20),
                              command=lambda: other_bg())
     other_button.pack(pady=20)
-    back_button = tk.Button(window, text='Back', font=('georgia', 10), 
+    back_button = tk.Button(window, text='Back', font=('georgia', 10),
                             command=lambda: settings())
     back_button.pack()
-    
-    def colors():
-        clear_page()  
 
-        green_button = tk.Button(window, text=' Green', font=('Georgia', 20), 
-                                 bg='SpringGreen2', command=lambda: commit_theme(green))
+    def colors():
+        clear_page()
+
+        green_button = tk.Button(window, text=' Green', font=('Georgia', 20),
+                                 bg='SpringGreen2',
+                                 command=lambda: commit_theme(green))
         green_button.pack(pady=0)
-    
-        gold_button = tk.Button(window, text=' Gold  ', font=('Georgia', 20), 
+        gold_button = tk.Button(window, text=' Gold  ', font=('Georgia', 20),
                                 bg='gold', command=lambda: commit_theme(gold))
         gold_button.pack(pady=0)
 
-        purple_button = tk.Button(window, text='Purple', font=('Georgia', 20), bg='dark orchid', command=lambda: commit_theme(purple))
+        purple_button = tk.Button(window, text='Purple', font=('Georgia', 20),
+                                  bg='dark orchid',
+                                  command=lambda: commit_theme(purple))
         purple_button.pack(pady=0)
 
         black_button = tk.Button(window, text=' Black ',
-                                 font=('georgia', 20), bg='gray1', fg='gray100', command=lambda: commit_theme(black))
+                                 font=('georgia', 20),
+                                 bg='gray1', fg='gray100',
+                                 command=lambda: commit_theme(black))
         black_button.pack(pady=0)
 
-        red_button = tk.Button(window, text=' Red ', font=('georgia', 25), bg='red', command=lambda: commit_theme(red))
+        red_button = tk.Button(window, text=' Red ', font=('georgia', 25),
+                               bg='red', command=lambda: commit_theme(red))
         red_button.pack(pady=0)
 
-        back_button = tk.Button(window, text='Back', font=('georgia', 10), command=lambda: background_menu())
+        back_button = tk.Button(window, text='Back', font=('georgia', 10),
+                                command=lambda: background_menu())
         back_button.pack(padyv=50)
-    
+
     def other_bg():  # themes that are more than colors
         clear_page()
 
         cat_button = tk.Button(window, bg='DarkGoldenrod1', fg='Black',
                                text=' Cats  ', font=('georgia', 20),
-                               command=lambda: commit_theme(cat_game_background))
+                               command=lambda:
+                               commit_theme(cat_game_background))
         cat_button.pack(pady=0)
 
         christmas_button = tk.Button(window, bg='green2', fg='red2',
                                      text='Christmas', font=('georgia', 20),
-                                     command=lambda: commit_theme(xmas_game_bg))
+                                     command=lambda: commit_theme
+                                     (xmas_game_bg))
         christmas_button.pack(pady=0)
 
         old_fashioned_button = tk.Button(window, bg='bisque2', fg='black',
                                          text='Old Fashioned', font=('georgia', 20),
-                                         command=lambda: commit_theme(old_f_game))
+                                         command=lambda: commit_theme
+                                         (old_f_game))
         old_fashioned_button.pack(pady=0)
 
         neon_button = tk.Button(window, bg='DarkOrchid2', fg='deep sky blue',
-                                text='Neon', font=('Georgia', 20), 
+                                text='Neon', font=('Georgia', 20),
                                 command=lambda: commit_theme(neon_game))
         neon_button.pack(pady=0)
 
@@ -805,7 +828,7 @@ def background_menu():
 def commit_theme(theme):
     global selected_theme
     global home_background
-    selected_theme = theme 
+    selected_theme = theme
     if selected_theme == cat_game_background:
         home_background = cat_home
         welcome()
