@@ -116,7 +116,8 @@ def test_name(name):
         bad_username_label.pack(pady=15)
         window.after(2000, bad_username_label.destroy)
     elif len(name) > 10:
-        bad_username_label = tk.Label(window, text='Please enter a username between 1-10 character(s)',
+        bad_username_label = tk.Label(window,
+                                      text='Please enter a username between 1-10 character(s)',
                                       font=('georgia', 10))
         bad_username_label.pack(pady=15)
         window.after(2000, bad_username_label.destroy)
@@ -167,7 +168,7 @@ def test_name(name):
                                 font=('georgia', 15))
         franko_label.pack()
         window.after(2000, lambda: pre_bet(name))
-   
+
     else:
         window.after(1, lambda: pre_bet(name))
 
@@ -175,7 +176,7 @@ def test_name(name):
 def clear_page():  # clears page when called. (Time saver)
     for widget in window.winfo_children():
         widget.pack_forget()
-        
+
 
 def blind():  # first deal
     global wallet
@@ -187,7 +188,8 @@ def blind():  # first deal
         try:
             bet_amount = int(bet,)  # checks if bet can be made an int
             if bet_amount > wallet:  # bet more than you have
-                not_enough_label = tk.Label(window, text=f'Not enough money. Max bet ${wallet}', font=('georgia', 10))
+                not_enough_label = tk.Label(window, 
+                                            text=f'Not enough money. Max bet ${wallet}', font=('georgia', 10))
                 not_enough_label.pack(pady=10)
                 window.after(2000, not_enough_label.destroy)
             elif bet_amount < 1:
@@ -203,7 +205,7 @@ def blind():  # first deal
                 total_betting_label.pack(pady=10)
                 window.after(1000, total_betting_label.destroy)
                 window.after(1000, lambda: next())
-        except:  # bet was either a decimal or text
+        except ValueError:  # bet was either a decimal or text
             error_label = tk.Label(window, text='Invalid number',
                                    font=('georgia', 20)) 
             # bet cannot be made an int
@@ -271,7 +273,7 @@ def blind():  # first deal
                                         (bet_entry_turn.get(),
                                             next=showdown))
             bet_button_turn.pack(pady=0)
-            fold_button_turn = tk.Button(window, text='Fold', 
+            fold_button_turn = tk.Button(window, text='Fold',
                                          font=('georgia', 15),
                                          command=lambda: fold())
             fold_button_turn.pack(pady=0)
@@ -285,12 +287,12 @@ def blind():  # first deal
                 wallet_label_3.destroy()
                 bet_enter_label.destroy()
 
-                comp_cards_label = tk.Label(comp_frame, text='Dealers Cards', 
+                comp_cards_label = tk.Label(comp_frame, text='Dealers Cards',
                                             font=('georgia', 20))
                 comp_cards_label.pack()
                 global computer_cards
                 computer_cards = random.sample(deck, 2)
-    
+
                 for card in computer_cards:  # computer cards
                     deck.remove(card)
                     image_file = card_images.get(card, None)
@@ -328,7 +330,7 @@ def blind():  # first deal
                         ranks_player.append(rank)
                         suits_player.append(suit)
                     return ranks_player, suits_player
-              
+
                 def get_computer_hand_details():
                     global ranks_computer
                     global suits_computer
@@ -343,9 +345,9 @@ def blind():  # first deal
                         ranks_computer.append(rank)
                         suits_computer.append(suit)
                     return ranks_computer, suits_computer
-                
+
                 def evaluate_computer_hand():
-                    get_computer_hand_details()   # This function extract the rank and suit and put them in lists to be checked for hands
+                    get_computer_hand_details()   # function extract rank and suit and put in lists to be checked for hands
                     global rank_values
                     rank_values = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
                                    '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 11,
@@ -353,7 +355,7 @@ def blind():  # first deal
                     global computer_rank_values
                     computer_rank_values = \
                         [rank_values[rank] for rank in ranks_computer]
-                    # These lines assigns an integer value to the string value of rank to allow the code to detect straights
+                    # These lines assign integer value to the string value of rank to allow the code to detect straights
                     
                     straight()
                     flush()
@@ -398,57 +400,57 @@ def blind():  # first deal
                             return False
                     else:
                         return True
-                
+
                 def four_of_kind():
                     rank_counter = Counter(computer_rank_values)
                     if 4 in rank_counter.values():
                         return True
                     else:
                         return False
-                
+
                 def full_house():
                     rank_counter = Counter(computer_rank_values)
                     if 3 in rank_counter.values() and 2 in rank_counter.values():
                         return True
                     else:
                         return False
-                
+
                 def three_of_kind():
                     rank_counter = Counter(computer_rank_values)        
                     if 3 in rank_counter.values():
-                        return True  
+                        return True
                     else:
-                        return False  
-                    
+                        return False
+
                 def two_pair():
                     rank_counter = Counter(computer_rank_values)
                     pair_counts = list(rank_counter.values())
                     if pair_counts.count(2) >= 2:
-                        return True 
+                        return True
                     else:
-                        return False   
-                
+                        return False
+
                 def pair():
                     rank_counter = Counter(computer_rank_values)
                     if 2 in rank_counter.values():
                         return True
                     else:
                         return False
-                            
+
                 def high_card():
                     return max(computer_rank_values)        
-                
+
                 def evaluate_player_hand():
-                    get_player_hand_details()   
-                    
+                    get_player_hand_details()
+
                     rank_values = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
-                                   '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 11, 
+                                   '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 11,
                                    'Queen': 12, 'King': 13, 'Ace': 14}
-                                   
+
                     global player_rank_values
                     player_rank_values = \
                         [rank_values[rank] for rank in ranks_player]
-                    
+
                     straight()
                     flush()
                     four_of_kind()
@@ -457,7 +459,7 @@ def blind():  # first deal
                     two_pair()
                     pair()
                     high_card()
-                    
+
                     if straight() and flush():
                         return 'straight_flush'
                     elif four_of_kind():
@@ -476,7 +478,7 @@ def blind():  # first deal
                         return 'pair'
                     else:
                         return 'high_card'
-                
+
                 def straight():
                     sorted_values = sorted(player_rank_values)
                     for i in range(1, len(sorted_values)):
@@ -484,7 +486,7 @@ def blind():  # first deal
                             return False
                     else:
                         return True
-                
+
                 def flush():
                     first_suit = suits_player[0]
                     for suit in suits_player:
@@ -492,49 +494,49 @@ def blind():  # first deal
                             return False
                     else:
                         return True
-                
+
                 def four_of_kind():
                     rank_counter = Counter(player_rank_values)
                     if 4 in rank_counter.values():
                         return True
                     else:
                         return False
-                
+
                 def full_house():
                     rank_counter = Counter(player_rank_values)
                     if 3 in rank_counter.values() and 2 in rank_counter.values():
                         return True
                     return False
-                
+
                 def three_of_kind():
                     rank_counter = Counter(player_rank_values)        
                     if 3 in rank_counter.values():
-                        return True  
-                    else: 
+                        return True
+                    else:
                         return False
-                    
+
                 def two_pair():
                     rank_counter = Counter(player_rank_values)
                     pair_counts = list(rank_counter.values())
                     if pair_counts.count(2) >= 2:
-                        return True 
+                        return True
                     return False
-                
+
                 def pair():
                     rank_counter = Counter(player_rank_values)
                     if 2 in rank_counter.values():
                         return True
                     return False
-                
+
                 def high_card():
-                    return 'high_card'        
-                
+                    return 'high_card'      
+
                 evaluate_player_hand()
                 evaluate_computer_hand()
-                
+
                 player_hand_final = evaluate_player_hand()
                 computer_hand_final = evaluate_computer_hand()
-                
+
                 player_hand_value = poker_hands_dict[player_hand_final]
                 computer_hand_value = poker_hands_dict[computer_hand_final]
 
@@ -561,7 +563,7 @@ def blind():  # first deal
                                                  text=f'Lost {player_bet}',
                                                  font=('georgia', 15))
                     amount_lost_label.pack()
-                    
+
                 def compare_high_cards():
                     global wallet
                     global player_bet
@@ -569,7 +571,8 @@ def blind():  # first deal
                         sorted([rank_values[rank] for rank in ranks_player],
                                reverse=True)
                     computer_numeric_ranks = sorted([rank_values[rank] for
-                                                     rank in ranks_computer], reverse=True)
+                                                     rank in ranks_computer],
+                                                    reverse=True)
                     for player_rank, computer_rank in zip(player_value_ranks,
                                                           computer_numeric_ranks):
                         if player_rank > computer_rank:
@@ -692,7 +695,7 @@ def pre_bet(name):  # before you bet after welcome function.
     bg_label = tk.Label(window, image=bg_image)
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
     clear_page()
-    name_label = tk.Label(window, text=f'welcome {username}', 
+    name_label = tk.Label(window, text=f'welcome {username}',
                           font=('georgia', 30))
     name_label.pack(pady=20)
     deal_button = tk.Button(window, text='DEAL!', font=('georgia', 20),
@@ -740,7 +743,7 @@ def settings():
 
 def credits():
     clear_page()
-    Credits_label = tk.Label(window, text="Credits And Attributions", 
+    Credits_label = tk.Label(window, text="Credits And Attributions",
                              font=('georgia', 20))
     Credits_label.pack(pady=20)
     devs_label = tk.Label(window, text='Developers', font=('georgia', 15))
@@ -814,7 +817,8 @@ def background_menu():
         christmas_button.pack(pady=0)
 
         old_fashioned_button = tk.Button(window, bg='bisque2', fg='black',
-                                         text='Old Fashioned', font=('georgia', 20),
+                                         text='Old Fashioned',
+                                         font=('georgia', 20),
                                          command=lambda: commit_theme
                                          (old_f_game))
         old_fashioned_button.pack(pady=0)
