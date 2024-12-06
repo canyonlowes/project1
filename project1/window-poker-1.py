@@ -347,7 +347,7 @@ def blind():  # first deal
                     return ranks_computer, suits_computer
 
                 def evaluate_computer_hand():
-                    get_computer_hand_details()   # function extract rank and suit and put in lists to be checked for hands
+                    get_computer_hand_details()   # function extract rank and suit, puts in lists to be checked for hands
                     global rank_values
                     rank_values = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
                                    '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 11,
@@ -580,7 +580,7 @@ def blind():  # first deal
                                                         text="You Win!",
                                                         font=("georgia", 20))
                             player_high_card.pack()
-                            amount_won_label_chc = tk.Label(window, 
+                            amount_won_label_chc = tk.Label(window,
                                                             text=f'Won ${player_bet*2}!',
                                                             font=('georgia', 15))
                             amount_won_label_chc.pack()
