@@ -350,12 +350,14 @@ def blind():  # first deal
                     get_computer_hand_details()   # function extract rank and suit, puts in lists to be checked for hands
                     global rank_values
                     rank_values = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
-                                   '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 11,
-                                   'Queen': 12, 'King': 13, 'Ace': 14}
+                                   '7': 7, '8': 8, '9': 9, '10': 10, 
+                                   'Jack': 11,
+                                   'Queen': 12, 'King':
+                                   13, 'Ace': 14}
                     global computer_rank_values
                     computer_rank_values = \
                         [rank_values[rank] for rank in ranks_computer]
-                    # These lines assign integer value to the string value of rank to allow the code to detect straights
+                    # assign integer value to string value of rank, allow code to detect straights
                     
                     straight()
                     flush()
@@ -451,35 +453,35 @@ def blind():  # first deal
                     player_rank_values = \
                         [rank_values[rank] for rank in ranks_player]
 
-                    straight()
-                    flush()
-                    four_of_kind()
-                    full_house()
-                    three_of_kind()
-                    two_pair()
-                    pair()
-                    high_card()
+                    straight_p()
+                    flush_p()
+                    four_of_kind_p()
+                    full_house_p()
+                    three_of_kind_p()
+                    two_pair_p()
+                    pair_p()
+                    high_card_p()
 
-                    if straight() and flush():
+                    if straight_p() and flush_p():
                         return 'straight_flush'
-                    elif four_of_kind():
+                    elif four_of_kind_p():
                         return 'four_of_a_kind'
-                    elif full_house():
+                    elif full_house_p():
                         return 'full_house'
-                    elif flush():
+                    elif flush_p():
                         return 'flush'
-                    elif straight():
+                    elif straight_p():
                         return 'straight'
-                    elif three_of_kind():
+                    elif three_of_kind_p():
                         return 'three_of_a_kind'
-                    elif two_pair():
+                    elif two_pair_p():
                         return 'two_pair'
-                    elif pair():
+                    elif pair_p():
                         return 'pair'
                     else:
                         return 'high_card'
 
-                def straight():
+                def straight_p():
                     sorted_values = sorted(player_rank_values)
                     for i in range(1, len(sorted_values)):
                         if sorted_values[i] != sorted_values[i - 1] + 1:
@@ -487,7 +489,7 @@ def blind():  # first deal
                     else:
                         return True
 
-                def flush():
+                def flush_p():
                     first_suit = suits_player[0]
                     for suit in suits_player:
                         if suit != first_suit:
@@ -495,41 +497,41 @@ def blind():  # first deal
                     else:
                         return True
 
-                def four_of_kind():
+                def four_of_kind_p():
                     rank_counter = Counter(player_rank_values)
                     if 4 in rank_counter.values():
                         return True
                     else:
                         return False
 
-                def full_house():
+                def full_house_p():
                     rank_counter = Counter(player_rank_values)
                     if 3 in rank_counter.values() and 2 in rank_counter.values():
                         return True
                     return False
 
-                def three_of_kind():
+                def three_of_kind_p():
                     rank_counter = Counter(player_rank_values)        
                     if 3 in rank_counter.values():
                         return True
                     else:
                         return False
 
-                def two_pair():
+                def two_pair_p():
                     rank_counter = Counter(player_rank_values)
                     pair_counts = list(rank_counter.values())
                     if pair_counts.count(2) >= 2:
                         return True
                     return False
 
-                def pair():
+                def pair_p():
                     rank_counter = Counter(player_rank_values)
                     if 2 in rank_counter.values():
                         return True
                     return False
 
-                def high_card():
-                    return 'high_card'      
+                def high_card_p():
+                    return 'high_card'
 
                 evaluate_player_hand()
                 evaluate_computer_hand()
